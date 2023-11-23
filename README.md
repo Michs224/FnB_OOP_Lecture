@@ -19,8 +19,8 @@
   Setelah berhasil melakukan transaksi, ditampilkan invoice.
   
 ## Implementasi Konsep OOP
-#### Abstraksi dan Interface:
-Terdapat antarmuka MenuManagement untuk manajemen data menu.
+#### Abstract dan Interface:
+Terdapat interface MenuManagement untuk manajemen data menu.
 Kelas Menu sebagai kelas abstrak yang mewakili menu dengan properti umum seperti nama, dan harga.
 
 #### Encapsulation:
@@ -36,12 +36,12 @@ Metode saveToDatabase() diimplementasikan secara berbeda oleh Food dan Beverage 
 ## Penggunaan Database MySQL
 ### Struktur Tabel:
 #### - Tabel customers untuk menyimpan data pelanggan.
-#### - Tabel food dan beverage untuk menyimpan data makanan dan minuman.
+#### - Tabel foods dan beverages untuk menyimpan data makanan dan minuman.
 #### - Tabel orders untuk menyimpan informasi pesanan.
-#### - Tabel order_items untuk menyimpan detail dari setiap item dalam pesanan.
+#### - Tabel orderdetails untuk menyimpan detail dari setiap item dalam pesanan.
 
 ### Kunci Asing dan Constraint:
-#### - Penggunaan kunci asing untuk mengaitkan tabel orders dan order_items dengan customers, food, dan beverage.
+#### - Penggunaan kunci asing untuk mengaitkan tabel orders dan order_items dengan customers, foods, dan beverages.
 #### - Pengaturan ON DELETE dan ON UPDATE pada kunci asing untuk menjaga referensial integritas data.
 
 ## Cara Menjalankan Aplikasi
