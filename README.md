@@ -1,3 +1,5 @@
+## Dibaca yak, ini dah dibuat isi dari projectnya...
+
 # Aplikasi Pesan Makanan & Minuman dengan Konsep OOP dan MySQL Database
 
 ## Deskripsi Proyek
