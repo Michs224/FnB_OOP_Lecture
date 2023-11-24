@@ -42,7 +42,7 @@ Metode saveToDatabase() diimplementasikan secara berbeda oleh Food dan Beverage 
 #### - Tabel orders untuk menyimpan informasi pesanan.
 #### - Tabel orderdetails untuk menyimpan detail dari setiap item dalam pesanan.
 
-### Kunci Asing dan Constraint:
+### Foreign Key dan Constraint:
 #### - Penggunaan kunci asing untuk mengaitkan tabel orders dan order_items dengan customers, foods, dan beverages.
 #### - Pengaturan ON DELETE dan ON UPDATE pada kunci asing untuk menjaga referensial integritas data.
 
