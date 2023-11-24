@@ -13,7 +13,7 @@ public class Customer implements CustomerManagement {
     
  // constructor, getter, setter methods
 	public Customer() {
-		
+		//ini constructor cuma gimmick :P
 	}
 
 	protected String getName() {
@@ -56,12 +56,13 @@ public class Customer implements CustomerManagement {
     }
 
     @Override
-    public void updateCustomer(String name, String address) throws SQLException {
+    public void updateCustomer(String name, String column, String value) throws SQLException {
         try (Connection connection = DatabaseConnection.getConnection()) {
-            String query = "UPDATE customer SET address = ? WHERE name = ?";
+            String query = "UPDATE customer SET ? = ? WHERE name = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, address);
-                preparedStatement.setString(2, name);
+                preparedStatement.setString(1, column);
+                preparedStatement.setString(2, value);
+                preparedStatement.setString(3, name);
 
                 preparedStatement.executeUpdate();
             }
