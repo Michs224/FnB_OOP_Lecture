@@ -3,42 +3,90 @@ package FnB_Main;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.ResultSet;
 
 //Kelas abstrak sebagai dasar untuk objek pelanggan
 
-public class Customer implements CustomerManagement {
+class CustomerData{// kelas untuk menyimpan data customer
+    private String id;
     private String name;
     private String address;
     private double balance;
-    
+
+    public CustomerData(String id,String name, String address,double balance){
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.balance = balance;
+    }
+
+    public String getId(){
+        return id;
+    }
+
+    public void setId(String id){
+            this.id = id;
+    }
+
+    public String getName() {
+	    return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+        
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+}
+
+public class Customer implements CustomerManagement {//kelas customer query ke database
+
  // constructor, getter, setter methods
-	public Customer() {
-		//ini constructor cuma gimmick :P
-	}
+	
+    @Override
+    public CustomerData queryCustomer(String name){
+        try {
+            Connection connection = DatabaseConnection.getConnection();
+            String query = "SELECT * FROM customer WHERE name = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, name);
 
-	protected String getName() {
-		return name;
-	}
+            ResultSet result = preparedStatement.executeQuery();
+            String customer_id ="",customer_name = "",address = "";
+            double balance = 0;
 
-	protected void setName(String name) {
-		this.name = name;
-	}
+            while(result.next()){
+                    
+                customer_id = result.getString("customer_id");
+                customer_name = result.getString("customer_name");
+                address = result.getString("address");
+                balance = result.getDouble("balance");
 
-	protected String getAddress() {
-		return address;
-	}
+            }
+            //hasil query disimpan ke dalam object customerData
+            CustomerData queryResult = new CustomerData(customer_id,customer_name,address,balance);
 
-	protected void setAddress(String address) {
-		this.address = address;
-	}
-
-	protected double getBalance() {
-		return balance;
-	}
-
-	protected void setBalance(double balance) {
-		this.balance = balance;
-	}
+            return queryResult;
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 
     @Override
@@ -52,10 +100,6 @@ public class Customer implements CustomerManagement {
 
                 preparedStatement.executeUpdate();
 
-                //synchronize property and database
-                setName(name);
-                setAddress(address);
-                setBalance(initialBalance);
             }
         }
     }
@@ -72,16 +116,6 @@ public class Customer implements CustomerManagement {
 
                 preparedStatement.executeUpdate();
 
-                //synchronize property and database
-                if(column == "customer_name"){
-                    setName(name);
-                }
-                else if(column == "address"){
-                    setAddress(value);
-                }
-                else if(column == "balance"){
-                    setBalance(Double.parseDouble(value));
-                }
             }
         }
     }
