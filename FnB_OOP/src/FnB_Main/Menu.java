@@ -12,7 +12,6 @@ public abstract class Menu {
 //		
 //	}
 	
-
     protected String getItemName() {
 		return itemName;
 	}
