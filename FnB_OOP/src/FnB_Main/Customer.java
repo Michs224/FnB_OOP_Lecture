@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 
-//Kelas abstrak sebagai dasar untuk objek pelanggan
 
 class CustomerData{// kelas untuk menyimpan data customer
     private String id;
