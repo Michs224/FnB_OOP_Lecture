@@ -9,6 +9,7 @@ public class Main {
 		
 		
 		System.out.println("halo");
+		System.out.println("halos");
 		
 		
 		//End
