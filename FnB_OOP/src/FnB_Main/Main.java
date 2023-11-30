@@ -9,6 +9,7 @@ public class Main {
 		
 		
 		System.out.println("Hello worlds");
+		System.out.println("Hello worlds");
 		
 		
 		//End
