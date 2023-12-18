@@ -14,5 +14,5 @@ public interface CustomerManagement {
         throw new UnsupportedOperationException("Unimplemented method 'getCustomerByName'");
     }
     void topUpBalance(String name, double amount) throws SQLException;
-    // void viewAllCustomers();
+    void viewAllCustomers() throws SQLException;
 }

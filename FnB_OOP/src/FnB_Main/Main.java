@@ -7,14 +7,13 @@ import java.sql.SQLException;
 // FOOD AND BEVERAGE_OOP OBJECT
 
 public class Main {
-
+	Scanner sc = new Scanner(System.in);
 	public Main() {
 		// Start
 		int choice, pilihanManajemenData;
 		String name, address, namaToUpdate, newAddress;
 		double initialBalance;
 		boolean found;
-		Scanner sc = new Scanner(System.in);
 
 		Display display = new Display();
 		CustomerManagement customerManagement = new Customer();
