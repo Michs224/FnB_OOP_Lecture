@@ -249,7 +249,7 @@ public class Customer implements CustomerManagement {
         }
     }
 
-    public static Customer getCustomerByName(String name) throws SQLException {
+    public Customer getCustomerByName(String name) throws SQLException {
         try (Connection connection = DatabaseConnection.getConnection()) {
             String query = "SELECT * FROM customer WHERE name = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
