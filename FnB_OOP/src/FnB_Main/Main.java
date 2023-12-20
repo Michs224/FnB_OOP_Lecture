@@ -38,7 +38,7 @@ public class Main {
 			System.out.println("3. Hapus data");
 			System.out.println("4. Lihat semua data");
 			System.out.println("5. Back");
-			System.out.print("Input pilihan: ");
+			System.out.print("Choice>> ");
 			pilihanManajemenData = sc.nextInt(); sc.nextLine();
 			switch (pilihanManajemenData) {
 				case 1:
@@ -125,13 +125,73 @@ public class Main {
 	        System.out.println("Error topping up balance: " + e.getMessage());
 	    }
 	}
+    boolean login(String username, String password) {
+		return false;
+        // Logic to verify login credentials
+    }
+
+    boolean register(String username, String password, String name) {
+		return false;
+        // Logic to insert new cashier into the database
+    }
+    
+    boolean attemptLogin() {
+        System.out.print("Enter username: ");
+        String username = sc.nextLine();
+        System.out.print("Enter password: ");
+        String password = sc.nextLine();
+
+        return login(username, password);
+    }
+
+    void attemptRegistration() {
+        System.out.print("Enter username: ");
+        String username = sc.nextLine();
+        System.out.print("Enter password: ");
+        String password = sc.nextLine();
+        System.out.print("Enter full name: ");
+        String name = sc.nextLine();
+
+        if (register(username, password, name)) {
+            System.out.println("Registration successful. Please log in.");
+        } else {
+            System.out.println("Registration failed. User may already exist.");
+        }
+    }
 	
 	public Main() {
 		// Start
+		boolean check=true;
+        while (check) {
+            System.out.println("Welcome to the Cashier System!");
+            System.out.println("1. Login");
+            System.out.println("2. Register");
+            System.out.println("3. Exit");
+            System.out.print("Please select an option: ");
+            int option = sc.nextInt();
+            sc.nextLine(); 
+
+            switch (option) {
+                case 1:
+                    if (attemptLogin()) {
+                        check=false;
+                    }
+                    break;
+                case 2:
+                    attemptRegistration();
+                    check=false;
+                    break;
+                case 3:
+                    System.out.println("Exiting system...");
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid option. Please try again.");
+            }
+        }
+		
+		
 		int choice;
 		Customer cust = new Customer();
-//		HandleTopUpBalance handleTopUpBalance = new HandleTopUpBalance();
-
 		do {
 			mainMenu();
 			choice = sc.nextInt();
