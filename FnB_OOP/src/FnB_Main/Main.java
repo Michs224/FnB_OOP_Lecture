@@ -26,6 +26,7 @@ public class Main {
         System.out.println("4. Pesan dan pembayaran");
         System.out.println("5. Exit");
         System.out.print("Choice >> ");
+        System.out.println("gg");
     }
     
     
