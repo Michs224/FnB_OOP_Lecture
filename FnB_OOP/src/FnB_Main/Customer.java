@@ -205,18 +205,20 @@ public class Customer implements CustomerManagement {
     }
 
     @Override
-    public void addCustomer(String name, String address, double initialBalance) throws SQLException {
+    public void addCustomer(String name, String address, double initialBalance, String phone) throws SQLException {
         try (Connection connection = DatabaseConnection.getConnection()) {
-            String query = "INSERT INTO customers (name, address, balance) VALUES (?, ?, ?)";
+            String query = "INSERT INTO customers (customer_name, address, balance, phone) VALUES (?, ?, ?, ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, name);
                 preparedStatement.setString(2, address);
                 preparedStatement.setDouble(3, initialBalance);
+                preparedStatement.setString(4, phone);
 
                 preparedStatement.executeUpdate();
             }
         }
     }
+
 
     @Override
     public void updateCustomer(String name, String newAddress) throws SQLException {
