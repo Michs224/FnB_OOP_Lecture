@@ -207,7 +207,7 @@ public class Customer implements CustomerManagement {
     @Override
     public void addCustomer(String name, String address, double initialBalance) throws SQLException {
         try (Connection connection = DatabaseConnection.getConnection()) {
-            String query = "INSERT INTO customer (name, address, balance) VALUES (?, ?, ?)";
+            String query = "INSERT INTO customers (name, address, balance) VALUES (?, ?, ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, name);
                 preparedStatement.setString(2, address);
@@ -221,7 +221,7 @@ public class Customer implements CustomerManagement {
     @Override
     public void updateCustomer(String name, String newAddress) throws SQLException {
         try (Connection connection = DatabaseConnection.getConnection()) {
-            String query = "UPDATE customer SET address = ? WHERE name = ?";
+            String query = "UPDATE customers SET address = ? WHERE name = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, newAddress);
                 preparedStatement.setString(2, name);
@@ -240,7 +240,7 @@ public class Customer implements CustomerManagement {
     @Override
     public void deleteCustomer(String name) throws SQLException {
         try (Connection connection = DatabaseConnection.getConnection()) {
-            String query = "DELETE FROM customer WHERE name = ?";
+            String query = "DELETE FROM customers WHERE name = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, name);
 
@@ -251,7 +251,7 @@ public class Customer implements CustomerManagement {
 
     public Customer getCustomerByName(String name) throws SQLException {
         try (Connection connection = DatabaseConnection.getConnection()) {
-            String query = "SELECT * FROM customer WHERE name = ?";
+            String query = "SELECT * FROM customers WHERE name = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, name);
 
@@ -271,7 +271,7 @@ public class Customer implements CustomerManagement {
 
     public void viewAllCustomers() throws SQLException {
         try (Connection connection = DatabaseConnection.getConnection()) {
-            String query = "SELECT * FROM customer";
+            String query = "SELECT * FROM customers";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     System.out.println("List of all customers:");
@@ -290,7 +290,7 @@ public class Customer implements CustomerManagement {
     @Override
     public void topUpBalance(String name, double amount) throws SQLException {
         try (Connection connection = DatabaseConnection.getConnection()) {
-            String query = "UPDATE customer SET balance = balance + ? WHERE name = ?";
+            String query = "UPDATE customers SET balance = balance + ? WHERE name = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setDouble(1, amount);
                 preparedStatement.setString(2, name);
