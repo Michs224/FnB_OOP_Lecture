@@ -4,13 +4,22 @@ import java.sql.SQLException;
 
 public abstract class Menu {
 	
-    private String itemName;
-    private double price;
+    private String itemName,itemID;
+	private double price;
 	
     // constructor, getter methods
 //	public Menu() {
 //		
 //	}
+	
+    protected String getItemID() {
+		return itemID;
+	}
+
+
+	protected void setItemID(String itemID) {
+		this.itemID = itemID;
+	}
 	
     protected String getItemName() {
 		return itemName;
@@ -32,6 +41,6 @@ public abstract class Menu {
 	}
 
 
-	public abstract void saveToDatabase() throws SQLException;
+	public abstract boolean printMenu() throws SQLException;
 
 }
