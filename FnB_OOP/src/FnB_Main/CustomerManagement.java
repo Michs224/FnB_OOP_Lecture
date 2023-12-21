@@ -7,9 +7,11 @@ import java.sql.SQLException;
 public interface CustomerManagement {
 	
 	void addCustomer(String name, String address, double initialBalance, String phone) throws SQLException;
-    void updateCustomer(String name, String address) throws SQLException;
-    void deleteCustomer(String name) throws SQLException;
+    public void deleteCustomer(String phoneToDelete) throws SQLException;
     public Customer getCustomerByPhone(String phone) throws SQLException;
     void topUpBalance(String name, double amount) throws SQLException;
-    void viewAllCustomers() throws SQLException;
+    public void viewAllCustomers() throws SQLException;
+    public void updateCustomerName(String phone, String newName) throws SQLException;
+    public void updateCustomerAddress(String phone, String newAddress) throws SQLException;
+    public void updateCustomerBalance(String phone, double newBalance) throws SQLException;
 }

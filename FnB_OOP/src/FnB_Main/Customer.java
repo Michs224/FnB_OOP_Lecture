@@ -230,40 +230,23 @@ public class Customer implements CustomerManagement {
         }
     }
 
-
     @Override
-    public void updateCustomer(String name, String newAddress) throws SQLException {
+    public void deleteCustomer(String phoneToDelete) throws SQLException {
         try (Connection connection = DatabaseConnection.getConnection()) {
-            String query = "UPDATE customers SET address = ? WHERE customer_name = ?";
+            String query = "DELETE FROM customers WHERE phone = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, newAddress);
-                preparedStatement.setString(2, name);
+                preparedStatement.setString(1, phoneToDelete);
 
                 int rowsAffected = preparedStatement.executeUpdate();
-
-                if (rowsAffected > 0) {
-                    System.out.println("Data pelanggan berhasil diperbarui.");
-                    Utility.PressEnter();
-                } else {
-                    System.out.println("Data pelanggan tidak ditemukan.");
+                if (rowsAffected == 0) {
+                    throw new SQLException("Deletion failed, no rows affected.");
                 }
             }
         }
     }
 
-    @Override
-    public void deleteCustomer(String name) throws SQLException {
-        try (Connection connection = DatabaseConnection.getConnection()) {
-            String query = "DELETE FROM customers WHERE name = ?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, name);
-
-                preparedStatement.executeUpdate();
-            }
-        }
-    }
     
-
+    @Override
     public Customer getCustomerByPhone(String phone) throws SQLException {
         try (Connection connection = DatabaseConnection.getConnection()) {
             String query = "SELECT * FROM customers WHERE phone = ?";
@@ -284,6 +267,7 @@ public class Customer implements CustomerManagement {
         return null;
     }
 
+    @Override
     public void updateCustomerName(String phone, String newName) throws SQLException {
         try (Connection connection = DatabaseConnection.getConnection()) {
             String query = "UPDATE customers SET customer_name = ? WHERE phone = ?";
@@ -296,6 +280,7 @@ public class Customer implements CustomerManagement {
         }
     }
 
+    @Override
     public void updateCustomerAddress(String phone, String newAddress) throws SQLException {
         try (Connection connection = DatabaseConnection.getConnection()) {
             String query = "UPDATE customers SET address = ? WHERE phone = ?";
@@ -307,8 +292,9 @@ public class Customer implements CustomerManagement {
             }
         }
     }
-    //s
-
+   
+    
+    @Override
     public void updateCustomerBalance(String phone, double newBalance) throws SQLException {
         try (Connection connection = DatabaseConnection.getConnection()) {
             String query = "UPDATE customers SET balance = ? WHERE phone = ?";
@@ -321,24 +307,36 @@ public class Customer implements CustomerManagement {
         }
     }
 
-
+    @Override
     public void viewAllCustomers() throws SQLException {
         try (Connection connection = DatabaseConnection.getConnection()) {
-            String query = "SELECT * FROM customers";
+            String query = "SELECT customer_name, phone, address, balance FROM customers";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    System.out.println("List of all customers:");
-
-                    while (resultSet.next()) {
-                        System.out.println("Name: " + resultSet.getString("name"));
-                        System.out.println("Address: " + resultSet.getString("address"));
-                        System.out.println("Balance: " + resultSet.getDouble("balance"));
-                        System.out.println("-------------------------");
+                    if (!resultSet.isBeforeFirst()) {
+                        System.out.println("No customers found.");
+                        return;
                     }
+                    
+                   
+                    System.out.println("+--------------------------------+--------------+--------------------------------+-----------+");
+                    System.out.printf("| %-30s | %-12s | %-30s | %-9s |\n", "Customer Name", "Phone", "Address", "Balance");
+                    System.out.println("+--------------------------------+--------------+--------------------------------+-----------+");
+                    
+                    
+                    while (resultSet.next()) {
+                        System.out.printf("| %-30s | %-12s | %-30s | %-9.2f |\n",
+                            resultSet.getString("customer_name"),
+                            resultSet.getString("phone"),
+                            resultSet.getString("address"),
+                            resultSet.getDouble("balance"));
+                    }
+                    System.out.println("+--------------------------------+--------------+--------------------------------+-----------+");
                 }
             }
         }
     }
+
 
     @Override
     public void topUpBalance(String name, double amount) throws SQLException {
