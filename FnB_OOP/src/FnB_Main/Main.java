@@ -1,6 +1,7 @@
 package FnB_Main;
 
 import java.util.Scanner;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,7 +33,7 @@ public class Main {
     void ManajemenData(Customer cust) {
     	
     	int pilihanManajemenData;
-		String name, address, namaToUpdate, newAddress;
+		String name, address, namaToUpdate, newAddress,phone = null;
 		double initialBalance=0;
 		boolean check=true,found;
 		while(check) {
@@ -52,7 +53,7 @@ public class Main {
 //					System.out.print("Masukkan saldo awal: ");
 //					initialBalance = sc.nextDouble();
 					try {
-						cust.addCustomer(name, address, initialBalance);
+						cust.addCustomer(name, address, initialBalance,phone);
 						System.out.println("Data pelanggan berhasil ditambahkan.");
 					} catch (SQLException e) {
 						System.out.println("Error: " + e.getMessage());
@@ -128,6 +129,39 @@ public class Main {
 	        System.out.println("Error topping up balance: " + e.getMessage());
 	    }
 	}
+	
+	
+	
+    void validatePassword(String password) {
+        if (password.isEmpty()) {
+            throw new IllegalArgumentException("Password tidak boleh kosong!");
+        }
+        if (!password.matches(".*[a-zA-Z].*")) {
+            throw new IllegalArgumentException("Password harus mengandung setidaknya satu huruf.");
+        }
+        if (!password.matches(".*[0-9].*")) {
+            throw new IllegalArgumentException("Password harus mengandung setidaknya satu angka.");
+        }
+        if (!password.matches(".*[!@#$%^&*()_?].*")) {
+            throw new IllegalArgumentException("Password harus mengandung setidaknya satu simbol.");
+        }
+        if (password.matches(".*\\s.*")) {
+            throw new IllegalArgumentException("Password tidak boleh mengandung spasi.");
+        }
+    }
+
+	
+	void validateName(String nama){
+		if (nama.isEmpty()){
+			throw new IllegalArgumentException("Nama tidak boleh kosong!");
+		}
+		else if(!nama.matches("^[a-zA-Z ]+$")) {
+			throw new IllegalArgumentException("Nama tidak boleh mengandung angka atau simbol");
+		}
+		
+	}
+	
+	
 	String login(String username, String password) throws SQLException {
 	    try (Connection connection = DatabaseConnection.getConnection()) {
 	        String query = "SELECT cashier_name FROM cashiers WHERE username = ? AND password = ?";
@@ -181,37 +215,131 @@ public class Main {
     void attemptLogin() throws SQLException {
         System.out.print("Enter username: ");
         String username = sc.nextLine();
-        System.out.print("Enter password: ");
-        String password = sc.nextLine();
+        String password=null;
+		boolean passwordValid=false;
+        
+        do {
+        	try {
+                System.out.print("Enter password: ");
+                password = sc.nextLine().trim();
+                validatePassword(password);
+                passwordValid=true;
+        	}catch(IllegalArgumentException e) {
+    			System.out.println("\n"+e.toString()+"\n");
+    			Utility.Cls();
+    			UILogReg();
+                System.out.print("2\nEnter username: "+username+"\n");
+        	}
+
+        }while(!passwordValid);
 
         String cashierName = login(username, password);
         if (cashierName != null) {
+            Utility.Cls();
             System.out.println("Login successful. Welcome, " + cashierName + "!");
-            // Proceed with next steps after successful login
         } else {
-            System.out.println("Login failed. Invalid username or password.");
+            System.out.println("\nLogin failed. Invalid username or password.");
         }
+
     }
+   
 
     void attemptRegistration() throws SQLException {
-        String username, password, name;
+        String username=null, password = null, name=null;
         boolean isRegistered = false;
         while (!isRegistered) {
             System.out.print("Enter username: ");
             username = sc.nextLine();
-            System.out.print("Enter password: ");
-            password = sc.nextLine();
-            System.out.print("Enter full name: ");
-            name = sc.nextLine();
+            
+    		boolean passwordValid=false;
+            
+            do {
+            	try {
+                    System.out.print("Enter password: ");
+                    password = sc.nextLine().trim();
+                    validatePassword(password);
+                    passwordValid=true;
+            	}catch(IllegalArgumentException e) {
+        			System.out.println("\n"+e.toString()+"\n");
+        			Utility.PressEnter();
+        			Utility.Cls();
+        			UILogReg();
+                    System.out.print("2\nEnter username: "+username+"\n");
+            	}
 
+            }while(!passwordValid);
+            
+            boolean nameValid=false;
+            do {
+            	try {
+                    System.out.print("Enter full name: ");
+                    name = sc.nextLine().trim();
+                    validateName(name);
+                    nameValid=true;
+            	}catch(IllegalArgumentException e) {
+        			System.out.println("\n"+e.toString()+"\n");
+        			Utility.PressEnter();
+        			Utility.Cls();
+        			UILogReg();
+                    System.out.print("2\nEnter username: "+username+"\n");
+                    System.out.print("2\nEnter password: "+password+"\n");
+            	}
+
+            }while(!nameValid);
+            
             isRegistered = register(username, password, name);
             if (isRegistered) {
-                System.out.println("Registration successful. Please log in.");
+                System.out.println("\nRegistration successful. Please log in.");
             } else {
                 System.out.println("Registration failed. User may already exist.");
             }
+            Utility.PressEnter();
+            Utility.Cls();
         }
     }
+    
+    void UILogReg() {
+        System.out.println("-------- Welcome to the Cashier System! -------");
+        System.out.println("1. Login");
+        System.out.println("2. Register");
+        System.out.println("3. Exit");
+        System.out.print("Please select an option: ");
+    }
+    
+    void CatalogMenu() {
+        Food food = new Food();
+        Beverage beverage = new Beverage();
+        try {
+        	String fid="Food Id",fn="Food Name",fc="Food Category";
+        	String pr="Price";
+            System.out.println("====================================================================================");
+            System.out.println("|                                    Foods                                         |");
+            System.out.println("====================================================================================");
+            System.out.printf("| %-10s | %-29s | %-20s | %-12s |\n",fid,fn,fc,pr);
+            System.out.println("====================================================================================");
+            boolean foodExists = food.printMenu();
+            
+        	String bid="Beverage Id",bn="Beverage Name",bt="Beverage Type",carb="Carbonated";
+
+            System.out.println("====================================================================================");
+            System.out.println("|                                  Beverages                                       |");
+            System.out.println("====================================================================================");
+            System.out.printf("| %-11s | %-20s | %-15s | %-10s | %-12s |\n",bid,bn,bt,carb,pr);
+            System.out.println("====================================================================================");
+            boolean beverageExists = beverage.printMenu();
+
+            if (!foodExists){
+                System.out.println("|           Tidak ada makanan yang tersedia.          |");
+            }
+            if (!beverageExists){
+                System.out.println("|           Tidak ada minuman yang tersedia.          |");
+            }
+            System.out.println("====================================================================================");
+        } catch (SQLException e) {
+            System.out.println("Error saat mencetak katalog: " + e.getMessage());
+        }
+    }
+
 
 	
 	public Main() throws SQLException {
@@ -219,20 +347,17 @@ public class Main {
 
 		boolean check=true;
         while (check) {
-            System.out.println("Welcome to the Cashier System!");
-            System.out.println("1. Login");
-            System.out.println("2. Register");
-            System.out.println("3. Exit");
-            System.out.print("Please select an option: ");
+    		UILogReg();
             int option = sc.nextInt();
             sc.nextLine(); 
 
             switch (option) {
                 case 1:
                 	attemptLogin();
+                	check=false;
                     break;
                 case 2:
-                    attemptRegistration();                   	
+                    attemptRegistration();
                     break;
                 case 3:
                     System.out.println("Exiting system...");
@@ -255,8 +380,9 @@ public class Main {
 					break;
 				
 				case 2:
-					// katalog makanan dan minuman
-					System.out.println("test");
+					CatalogMenu();
+			        Utility.PressEnter();
+			        Utility.Cls();
 					break;
 
 				case 3:
