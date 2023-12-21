@@ -168,11 +168,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import Utility.Utility;
+
 // Kelas abstrak sebagai dasar untuk objek pelanggan
 
 public class Customer implements CustomerManagement {
     private String name;
     private String address;
+    private String phone;
     private double balance;
 
     // constructor, getter, setter methods
@@ -203,9 +206,17 @@ public class Customer implements CustomerManagement {
     protected void setBalance(double balance) {
         this.balance = balance;
     }
+   
+    protected String getPhone() {
+		return phone;
+	}
 
-    @Override
-    public void addCustomer(String name, String address, double initialBalance, String phone) throws SQLException {
+	protected void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	@Override
+	public void addCustomer(String name, String address, double initialBalance, String phone) throws SQLException {
         try (Connection connection = DatabaseConnection.getConnection()) {
             String query = "INSERT INTO customers (customer_name, address, balance, phone) VALUES (?, ?, ?, ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -223,7 +234,7 @@ public class Customer implements CustomerManagement {
     @Override
     public void updateCustomer(String name, String newAddress) throws SQLException {
         try (Connection connection = DatabaseConnection.getConnection()) {
-            String query = "UPDATE customers SET address = ? WHERE name = ?";
+            String query = "UPDATE customers SET address = ? WHERE customer_name = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, newAddress);
                 preparedStatement.setString(2, name);
@@ -232,6 +243,7 @@ public class Customer implements CustomerManagement {
 
                 if (rowsAffected > 0) {
                     System.out.println("Data pelanggan berhasil diperbarui.");
+                    Utility.PressEnter();
                 } else {
                     System.out.println("Data pelanggan tidak ditemukan.");
                 }
@@ -251,18 +263,18 @@ public class Customer implements CustomerManagement {
         }
     }
 
-    public Customer getCustomerByName(String name) throws SQLException {
+    public Customer getCustomerByPhone(String phone) throws SQLException {
         try (Connection connection = DatabaseConnection.getConnection()) {
-            String query = "SELECT * FROM customers WHERE name = ?";
+            String query = "SELECT * FROM customers WHERE phone = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, name);
+                preparedStatement.setString(1, phone);
 
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     if (resultSet.next()) {
                         Customer customer = new Customer();
-                        customer.setName(resultSet.getString("name"));
+                        customer.setName(resultSet.getString("customer_name"));
                         customer.setAddress(resultSet.getString("address"));
-                        customer.setBalance(resultSet.getDouble("balance"));
+                        customer.setPhone(resultSet.getString("phone")); // Assuming you have a setter for phone
                         return customer;
                     }
                 }
@@ -270,6 +282,7 @@ public class Customer implements CustomerManagement {
         }
         return null;
     }
+
 
     public void viewAllCustomers() throws SQLException {
         try (Connection connection = DatabaseConnection.getConnection()) {
