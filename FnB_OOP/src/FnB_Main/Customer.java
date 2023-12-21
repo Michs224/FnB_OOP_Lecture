@@ -262,6 +262,7 @@ public class Customer implements CustomerManagement {
             }
         }
     }
+    
 
     public Customer getCustomerByPhone(String phone) throws SQLException {
         try (Connection connection = DatabaseConnection.getConnection()) {
@@ -281,6 +282,43 @@ public class Customer implements CustomerManagement {
             }
         }
         return null;
+    }
+
+    public void updateCustomerName(String phone, String newName) throws SQLException {
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            String query = "UPDATE customers SET customer_name = ? WHERE phone = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, newName);
+                preparedStatement.setString(2, phone);
+
+                preparedStatement.executeUpdate();
+            }
+        }
+    }
+
+    public void updateCustomerAddress(String phone, String newAddress) throws SQLException {
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            String query = "UPDATE customers SET address = ? WHERE phone = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, newAddress);
+                preparedStatement.setString(2, phone);
+
+                preparedStatement.executeUpdate();
+            }
+        }
+    }
+    //s
+
+    public void updateCustomerBalance(String phone, double newBalance) throws SQLException {
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            String query = "UPDATE customers SET balance = ? WHERE phone = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setDouble(1, newBalance);
+                preparedStatement.setString(2, phone);
+
+                preparedStatement.executeUpdate();
+            }
+        }
     }
 
 
