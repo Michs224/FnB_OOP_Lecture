@@ -4,33 +4,23 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
 
-import FnB_Main.Food.FoodCategory;
-
-public class Beverage extends Menu{
-	
+public class Beverage extends Menu {
     public enum BeverageType {
-        SOFT_DRINK,
-        JUICE,
-        COFFEE,
-        TEA
+        SOFT_DRINK, JUICE, COFFEE, TEA
     }
 
-    private BeverageType beverageType; // Jenis minuman (Soft drink, Juice, Coffee, Tea)
-    private boolean isCarbonated; // Apakah minuman berkarbonasi?
+    private BeverageType beverageType;
+    private boolean isCarbonated;
 
-    // constructor, getter, setter methods
-	public Beverage() {
-		// TODO Auto-generated constructor stub
-	}
+    // Constructor, getters and setters
+    public Beverage() {
+        // Constructor logic
+    }
 
-    public void setBeverageType(String type) {
-        try {
-            this.beverageType = BeverageType.valueOf(type);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Kategori makanan tidak valid: " + type);
-            // Atau Anda dapat menangani kasus ini dengan cara lain yang sesuai
-        }
+    public void setBeverageType(BeverageType type) {
+        this.beverageType = type;
     }
 
     public BeverageType getBeverageType() {
@@ -44,53 +34,40 @@ public class Beverage extends Menu{
     public boolean isCarbonated() {
         return isCarbonated;
     }
-    
-    
-    @Override
-    public boolean printMenu() throws SQLException {
-        boolean dataExists = false;
+
+    public Vector<Menu> getMenuItems() throws SQLException {
+        Vector<Menu> menuItems = new Vector<>();
         try (Connection connection = DatabaseConnection.getConnection()) {
             String query = "SELECT * FROM beverages";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     while (resultSet.next()) {
-                    	dataExists = true;
                         Beverage beverage = new Beverage();
                         beverage.setItemID(resultSet.getString("beverage_id"));
                         beverage.setItemName(resultSet.getString("beverage_name"));
                         beverage.setPrice(resultSet.getDouble("price"));
-                        beverage.setBeverageType(resultSet.getString("type")); 
-
-                        // Mengkonversi nilai int menjadi boolean
-                        boolean carbonated = resultSet.getInt("is_carbonated") == 1;
-                        beverage.setCarbonated(carbonated);
-
-                        // Mencetak detail minuman
-                        System.out.printf("| %-11s | %-20s | %-15s | %-10s | %-12s |\n",
-                        		beverage.getItemID(),beverage.getItemName(),beverage.getBeverageType(),
-                        		(beverage.isCarbonated() ? "Ya" : "Tidak"),beverage.getPrice());
+                        beverage.setBeverageType(BeverageType.valueOf(resultSet.getString("type")));
+                        beverage.setCarbonated(resultSet.getBoolean("is_carbonated"));
+                        menuItems.add(beverage);
                     }
                 }
             }
         }
-        return dataExists;
+        return menuItems;
     }
 
-
-//    @Override
-//    public void saveToDatabase() throws SQLException {
-//        try (Connection connection = DatabaseConnection.getConnection()) {
-//            String query = "INSERT INTO beverage (name, price, type, is_carbonated) VALUES (?, ?, ?, ?)";
-//            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-//                preparedStatement.setString(1, getItemName());
-//                preparedStatement.setDouble(2, getPrice());
-//                preparedStatement.setString(3, getBeverageType().toString());
-//                preparedStatement.setBoolean(4, isCarbonated);
-//
-//                preparedStatement.executeUpdate();
-//            }
-//        }
-//    }
+    public boolean printMenu() throws SQLException {
+        Vector<Menu> menuItems = getMenuItems();
+        if (menuItems.isEmpty()) {
+            return false;
+        }
+        for (Menu item : menuItems) {
+            Beverage beverage = (Beverage) item;
+            System.out.printf("| %-11s | %-20s | %-15s | %-10s | %-12s |\n",
+                              beverage.getItemID(), beverage.getItemName(), beverage.getBeverageType(),
+                              (beverage.isCarbonated() ? "Ya" : "Tidak"), beverage.getPrice());
+        }
+        return true;
+    }
 
 }

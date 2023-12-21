@@ -1,7 +1,7 @@
 package FnB_Main;
 
 import java.util.Scanner;
-
+import java.util.Vector;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,7 +17,7 @@ public class Main {
 	
     void mainMenu() {
         System.out.println("---------------------------------------------------------------");
-        System.out.println("|                        BurgerQueen                          |\n");
+        System.out.println("|                        BurgerQueen                          |");
         System.out.println("---------------------------------------------------------------");
         System.out.println("|              Aplikasi Pesan Makanan dan Minuman             |");
         System.out.println("---------------------------------------------------------------");
@@ -30,107 +30,296 @@ public class Main {
     }
     
     
-    void ManajemenData(Customer cust) {
-    	
-    	int pilihanManajemenData;
-		String name, address, namaToUpdate, newAddress,phone = null;
-		double initialBalance=0;
-		boolean check=true,found;
-		while(check) {
-			System.out.println("1. Tambah data baru");
-			System.out.println("2. Perbarui data");
-			System.out.println("3. Hapus data");
-			System.out.println("4. Lihat semua data");
-			System.out.println("5. Back");
-			System.out.print("Choice>> ");
-			pilihanManajemenData = sc.nextInt(); sc.nextLine();
-			switch (pilihanManajemenData) {
-				case 1:
-					System.out.print("Masukkan nama: ");
-					name = sc.nextLine();
-					System.out.print("Masukkan alamat: ");
-					address = sc.nextLine();
-//					System.out.print("Masukkan saldo awal: ");
-//					initialBalance = sc.nextDouble();
-					try {
-						cust.addCustomer(name, address, initialBalance,phone);
-						System.out.println("Data pelanggan berhasil ditambahkan.");
-					} catch (SQLException e) {
-						System.out.println("Error: " + e.getMessage());
-					}
-					break;
-
-				case 2:
-					System.out.print("Masukkan nama yang akan diperbarui: ");
-					namaToUpdate = sc.nextLine();
-					found = false;
-					try {
-						Customer existingCustomer = cust.getCustomerByName(namaToUpdate);
-						if (existingCustomer != null) {
-							found = true;
-							System.out.print("Masukkan alamat baru: ");
-							newAddress = sc.nextLine();
-							try {
-								cust.updateCustomer(namaToUpdate, newAddress);
-								System.out.println("Data pelanggan berhasil diperbarui.");
-							} catch (SQLException e) {
-								System.out.println("Error updating customer: " + e.getMessage());
-							}
-						}
-					} catch (Exception e) {
-						System.out.println("Error searching for customer: " + e.getMessage());
-					}
-
-					if (!found) {
-						System.out.println("Data pelanggan tidak ditemukan.");
-					}
-					break;
-
-				case 3:
-					System.out.print("Masukkan nama pelanggan yang akan dihapus: ");
-					String customerNameToDelete = sc.nextLine();
-					try {
-						cust.deleteCustomer(customerNameToDelete);
-						System.out.println("Data pelanggan berhasil dihapus.");
-					} catch (SQLException e) {
-						System.out.println("Error: " + e.getMessage());
-					}
-					break;
-
-				case 4:
-					try {
-						cust.viewAllCustomers();
-					} catch (SQLException e) {
-						System.out.println("Error viewing customers: " + e.getMessage());
-					}
-					break;
-				case 5:
-					check=false;
-
-				default:
-					System.out.println("\nInvalid Input!, please input again");
-					break;
-			}
-			Utility.Cls();
-		}
-		
+    void validateName1(String name) throws IllegalArgumentException {
+        if (name.isEmpty() || !name.matches("[a-zA-Z ]+")) {
+            throw new IllegalArgumentException("Nama tidak valid. Harus berupa huruf dan tidak boleh kosong.");
+        }
+    }
+    void validateAddress(String address) throws IllegalArgumentException {
+        if (address.isEmpty()) {
+            throw new IllegalArgumentException("Alamat tidak boleh kosong.");
+        }
+    }
+    void validatePhone(String phone) throws IllegalArgumentException {
+        if (!phone.matches("08\\d{10}") || phone.length() != 12) {
+            throw new IllegalArgumentException("Nomor telepon tidak valid. Harus diawali '08' dan panjang 12 karakter.");
+        }
     }
     
-	void handleTopUpBalance(CustomerManagement customerManagement) {
-	    System.out.print("Masukkan nama pelanggan untuk top up saldo: ");
-	    String customerName = sc.nextLine();
-	    System.out.print("Masukkan jumlah saldo yang ingin ditambahkan: ");
-	    double topUpAmount = sc.nextDouble();
-	    sc.nextLine();
+    
+    void ManajemenData(Customer cust) {
+        int pilihanManajemenData;
+        String name = "", address = "", phone = "", newAddress;
+        double initialBalance;
+        boolean check = true, found, nameValid = false;
 
-	    try {
-	        customerManagement.topUpBalance(customerName, topUpAmount);
-	    } catch (Exception e) {
-	        System.out.println("Error topping up balance: " + e.getMessage());
-	    }
-	}
-	
-	
+        while(check) {
+        	System.out.println("--------------------------------");
+        	System.out.println("|         ManajemenData        |");
+        	System.out.println("--------------------------------");
+            System.out.println("1. Tambah data baru");
+            System.out.println("2. Perbarui data");
+            System.out.println("3. Hapus data");
+            System.out.println("4. Lihat semua data");
+            System.out.println("5. Back");
+            System.out.print("Choice >> ");
+
+            if (!sc.hasNextInt()) {
+                System.out.println("Invalid input, please enter a number.");
+                sc.nextLine(); // clear the invalid input
+                continue;
+            }
+
+            pilihanManajemenData = sc.nextInt(); 
+            sc.nextLine();
+
+            switch (pilihanManajemenData) {
+            case 1:
+                boolean addressValid = false, phoneValid = false;
+
+                do {
+                    try {
+                        System.out.print("Masukkan nama: ");
+                        name = sc.nextLine().trim();
+                        validateName1(name);
+                        nameValid = true;
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("\n" + e.getMessage() + "\n");
+                        
+                    }
+                } while (!nameValid);
+
+                do {
+                    try {
+                        System.out.print("Masukkan alamat: ");
+                        address = sc.nextLine().trim();
+                        validateAddress(address);
+                        addressValid = true;
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("\n" + e.getMessage() + "\n");
+                        
+                      
+                    }
+                } while (!addressValid);
+
+                do {
+                    try {
+                        System.out.print("Masukkan nomor telepon: ");
+                        phone = sc.nextLine().trim();
+                        validatePhone(phone);
+
+                        Customer existingCustomer = cust.getCustomerByPhone(phone);
+                        if (existingCustomer != null) {
+                            throw new IllegalArgumentException("Nomor telepon sudah digunakan oleh pelanggan lain.");
+                        }
+
+                        phoneValid = true;
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("\n" + e.getMessage() + "\n");
+                    } catch (SQLException e) {
+                        System.out.println("\nError accessing database: " + e.getMessage() + "\n");
+                    }
+                } while (!phoneValid);
+
+                initialBalance = 0;
+                try {
+                    cust.addCustomer(name, address, initialBalance, phone);
+                    System.out.println("Data pelanggan berhasil ditambahkan.");
+                    Utility.PressEnter();
+                } catch (SQLException e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
+                break;
+
+            case 2:
+                phoneValid = false;
+                String phoneToUpdate = null;  
+                Customer existingCustomer = null;
+
+                while (!phoneValid) {
+                    try {
+                        System.out.print("Masukkan nomor telepon yang akan diperbarui: ");
+                        phoneToUpdate = sc.nextLine().trim();
+                        validatePhone(phoneToUpdate);
+
+                        existingCustomer = cust.getCustomerByPhone(phoneToUpdate);
+                        if (existingCustomer == null) {
+                            throw new IllegalArgumentException("Nomor telepon tidak ditemukan.");
+                        }
+
+                        phoneValid = true;
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("\n" + e.getMessage() + "\n");
+                    } catch (SQLException e) {
+                        System.out.println("\nError accessing database: " + e.getMessage() + "\n");
+                    }
+                }
+                
+             
+                found = false;
+                nameValid = false;
+    
+                try {
+                    if (existingCustomer != null) {
+                        found = true;
+                        System.out.println("1. Ubah Alamat");
+                        System.out.println("2. Ubah Nama");
+                        System.out.println("3. Ubah Saldo");
+                        System.out.print("Pilihan: ");
+                        int updateChoice = sc.nextInt();
+                        sc.nextLine(); // consume the remaining newline
+
+                        switch (updateChoice) {
+                            case 1:
+                                System.out.println("Alamat lama: " + existingCustomer.getAddress());
+                                System.out.print("Masukkan alamat baru: ");
+                                newAddress = sc.nextLine();
+                                if (!newAddress.equals(existingCustomer.getAddress())) {
+                                    System.out.println("Konfirmasi perubahan alamat dari '" + existingCustomer.getAddress() + "' ke '" + newAddress + "'? (y/n)");
+                                    if (sc.nextLine().trim().equalsIgnoreCase("y")) {
+                                        cust.updateCustomerAddress(phoneToUpdate, newAddress);
+                                        System.out.println("Alamat diperbarui.");
+                                        Utility.PressEnter();
+                                    }
+                                }
+                                break;
+                            case 2:
+                                String newName;
+                                nameValid = false; 
+                                System.out.println("Nama lama: " + existingCustomer.getName());
+
+                                while (!nameValid) {
+                                    try {
+                                        System.out.print("Masukkan nama baru: ");
+                                        newName = sc.nextLine().trim();
+
+                                        validateName1(newName); 
+
+                                        if (!newName.equals(existingCustomer.getName())) {
+                                            System.out.println("Konfirmasi perubahan nama dari '" + existingCustomer.getName() + "' ke '" + newName + "'? (y/n)");
+                                            String confirmation = sc.nextLine().trim();
+                                            if (confirmation.equalsIgnoreCase("y")) {
+                                                cust.updateCustomerName(phoneToUpdate, newName);
+                                                System.out.println("Nama diperbarui.");
+                                                Utility.PressEnter();
+                                                nameValid = true;
+                                            } else if (confirmation.equalsIgnoreCase("n")) {
+                                                System.out.println("Perubahan nama dibatalkan.");
+                                                Utility.PressEnter();
+                                                nameValid = true;
+                                            } else {
+                                                System.out.println("Masukkan 'y' untuk ya atau 'n' untuk tidak.");
+                                            }
+                                        } else {
+                                            System.out.println("Nama baru sama dengan nama lama. Tidak ada perubahan yang dilakukan.");
+                                            nameValid = true;
+                                        }
+                                    } catch (IllegalArgumentException e) {
+                                        System.out.println("\n" + e.getMessage() + "\n");
+                                    } catch (SQLException e) {
+                                        System.out.println("Error updating customer: " + e.getMessage());
+                                        
+                                    }
+                                }
+                                break;
+
+
+                            case 3:
+                                System.out.println("Saldo lama: " + existingCustomer.getBalance());
+                                System.out.print("Masukkan saldo baru: ");
+                                double newBalance = sc.nextDouble(); sc.nextLine(); 
+                                if (newBalance != existingCustomer.getBalance()) {
+                                    System.out.println("Konfirmasi perubahan saldo dari '" + existingCustomer.getBalance() + "' ke '" + newBalance + "'? (y/n)");
+                                    if (sc.nextLine().trim().equalsIgnoreCase("y")) {
+                                        cust.updateCustomerBalance(phoneToUpdate, newBalance);
+                                        System.out.println("Saldo diperbarui.");
+                                        Utility.PressEnter();
+                                    }
+                                }
+                                break;
+                            default:
+                                System.out.println("Pilihan tidak valid.");
+                        }
+                    }
+                } catch (SQLException e) {
+                    System.out.println("Error updating customer: " + e.getMessage());
+                } catch (Exception e) {
+                    System.out.println("Error searching for customer: " + e.getMessage());
+                }
+
+                if (!found) {
+                    System.out.println("Data pelanggan tidak ditemukan.");
+                    Utility.PressEnter();
+                }
+                break;
+
+                
+                
+
+            case 3:
+                phoneValid = false;
+                String phoneToDelete = "";
+
+                while (!phoneValid) {
+                    try {
+                        System.out.print("Masukkan nomor telepon pelanggan yang akan dihapus: ");
+                        phoneToDelete = sc.nextLine().trim();
+                        validatePhone(phoneToDelete);
+
+                        Customer customerToDelete = cust.getCustomerByPhone(phoneToDelete);
+                        if (customerToDelete == null) {
+                            throw new IllegalArgumentException("Pelanggan dengan nomor telepon tersebut tidak ditemukan.");
+                        }
+
+                        System.out.println("Apakah Anda yakin ingin menghapus data pelanggan berikut?");
+                        System.out.println("Nama: " + customerToDelete.getName());
+                        System.out.println("Alamat: " + customerToDelete.getAddress());
+                        System.out.println("Saldo: " + customerToDelete.getBalance());
+                        System.out.print("Konfirmasi penghapusan (y/n): ");
+                        
+                        String confirmation = sc.nextLine().trim();
+                        if (confirmation.equalsIgnoreCase("y")) {
+                            cust.deleteCustomer(phoneToDelete);
+                            System.out.println("Data pelanggan berhasil dihapus.");
+                            Utility.PressEnter();
+                        } else {
+                            System.out.println("Penghapusan dibatalkan.");
+                            Utility.PressEnter();
+                        }
+                        phoneValid = true;
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("\n" + e.getMessage() + "\n");
+                    } catch (SQLException e) {
+                        System.out.println("\nError: " + e.getMessage() + "\n");
+                    }
+                }
+                break;
+
+
+            case 4:
+                try {
+                    cust.viewAllCustomers();
+                    
+                } catch (SQLException e) {
+                    System.out.println("Error viewing customers: " + e.getMessage());
+                  
+                }
+                Utility.PressEnter();
+                break;
+
+            case 5:
+                check = false;
+                break;
+
+            default:
+                System.out.println("\nInvalid Input!, please input again");
+                break;
+            }
+            Utility.Cls();
+        }
+    }
+    
+		
 	
     void validatePassword(String password) {
         if (password.isEmpty()) {
@@ -162,24 +351,25 @@ public class Main {
 	}
 	
 	
-	String login(String username, String password) throws SQLException {
-	    try (Connection connection = DatabaseConnection.getConnection()) {
-	        String query = "SELECT cashier_name FROM cashiers WHERE username = ? AND password = ?";
-	        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-	            preparedStatement.setString(1, username);
-	            preparedStatement.setString(2, password);
+    Cashier login(String username, String password) throws SQLException {
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            String query = "SELECT cashier_id, cashier_name FROM cashiers WHERE username = ? AND password = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, username);
+                preparedStatement.setString(2, password);
 
-	            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-	                if (resultSet.next()) {
-	                    return resultSet.getString("cashier_name"); // Return cashier's name if login bisa
-	                }
-	            }
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-	    return null;
-	}
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        return new Cashier(
+                            resultSet.getInt("cashier_id"),
+                            resultSet.getString("cashier_name")
+                        );
+                    }
+                }
+            }
+        }
+        return null;
+    }
 
 
     boolean register(String username, String password, String name) throws SQLException {
@@ -212,7 +402,7 @@ public class Main {
     }
 
     
-    void attemptLogin() throws SQLException {
+    Cashier attemptLogin() throws SQLException {
         System.out.print("Enter username: ");
         String username = sc.nextLine();
         String password=null;
@@ -233,13 +423,15 @@ public class Main {
 
         }while(!passwordValid);
 
-        String cashierName = login(username, password);
-        if (cashierName != null) {
+        Cashier cashier = login(username, password);
+        if (cashier != null) {
             Utility.Cls();
-            System.out.println("Login successful. Welcome, " + cashierName + "!");
+            System.out.println("Login successful. Welcome, " + cashier.getName() + "!");
+            return cashier;
         } else {
             System.out.println("\nLogin failed. Invalid username or password.");
         }
+		return cashier;
 
     }
    
@@ -274,7 +466,7 @@ public class Main {
             	try {
                     System.out.print("Enter full name: ");
                     name = sc.nextLine().trim();
-                    validateName(name);
+                    validateName1(name);
                     nameValid=true;
             	}catch(IllegalArgumentException e) {
         			System.out.println("\n"+e.toString()+"\n");
@@ -295,6 +487,7 @@ public class Main {
             }
             Utility.PressEnter();
             Utility.Cls();
+            UILogReg();
         }
     }
     
@@ -306,26 +499,34 @@ public class Main {
         System.out.print("Please select an option: ");
     }
     
+    void FoodMenu() {
+    	String fid="Food Id",fn="Food Name",fc="Food Category";
+    	String pr="Price";
+        System.out.println("==========================================================================================");
+        System.out.println("|                                       Foods                                            |");
+        System.out.println("==========================================================================================");
+        System.out.printf("| %-2s | %-10s | %-29s | %-20s | %-12s |\n","No.",fid,fn,fc,pr);
+        System.out.println("==========================================================================================");
+    }
+    
+    void BeverageMenu() {
+    	String bid="Beverage Id",bn="Beverage Name",bt="Beverage Type",carb="Carbonated";
+    	String pr="Price";
+        System.out.println("==========================================================================================");
+        System.out.println("|                                     Beverages                                          |");
+        System.out.println("==========================================================================================");
+        System.out.printf("| %-2s | %-11s | %-20s | %-15s | %-10s | %-12s |\n",bid,bn,bt,carb,pr);
+        System.out.println("==========================================================================================");
+    }
+    
     void CatalogMenu() {
         Food food = new Food();
         Beverage beverage = new Beverage();
         try {
-        	String fid="Food Id",fn="Food Name",fc="Food Category";
-        	String pr="Price";
-            System.out.println("====================================================================================");
-            System.out.println("|                                    Foods                                         |");
-            System.out.println("====================================================================================");
-            System.out.printf("| %-10s | %-29s | %-20s | %-12s |\n",fid,fn,fc,pr);
-            System.out.println("====================================================================================");
+        	FoodMenu();
             boolean foodExists = food.printMenu();
             
-        	String bid="Beverage Id",bn="Beverage Name",bt="Beverage Type",carb="Carbonated";
-
-            System.out.println("====================================================================================");
-            System.out.println("|                                  Beverages                                       |");
-            System.out.println("====================================================================================");
-            System.out.printf("| %-11s | %-20s | %-15s | %-10s | %-12s |\n",bid,bn,bt,carb,pr);
-            System.out.println("====================================================================================");
+            BeverageMenu();
             boolean beverageExists = beverage.printMenu();
 
             if (!foodExists){
@@ -334,18 +535,176 @@ public class Main {
             if (!beverageExists){
                 System.out.println("|           Tidak ada minuman yang tersedia.          |");
             }
-            System.out.println("====================================================================================");
+            System.out.println("==========================================================================================");
         } catch (SQLException e) {
             System.out.println("Error saat mencetak katalog: " + e.getMessage());
         }
     }
+    
+	void handleTopUpBalance(CustomerManagement customerManagement) {
+	    System.out.print("Masukkan nama pelanggan untuk top up saldo: ");
+	    String customerName = sc.nextLine();
+	    System.out.print("Masukkan jumlah saldo yang ingin ditambahkan: ");
+	    double topUpAmount = sc.nextDouble();
+	    sc.nextLine();
 
+	    try {
+	        customerManagement.topUpBalance(customerName, topUpAmount);
+	    } catch (Exception e) {
+	        System.out.println("Error topping up balance: " + e.getMessage());
+	    }
+	}
+	
+	
+    Customer authenticateCustomer() {
+        System.out.print("Masukkan nomor telepon pelanggan: ");
+        String phone = sc.nextLine();
+        Customer customer = null;
+
+        try {
+            customer = new Customer().getCustomerByPhone(phone);
+            if (customer == null) {
+                System.out.println("Pelanggan tidak ditemukan.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error saat mengambil data pelanggan: " + e.getMessage());
+        }
+
+        return customer;
+    }
+    
+    
+    
+    void processOrder(Cashier currentCashier) {
+    	Customer currentCustomer =authenticateCustomer();
+        Order order = new Order();
+        Vector<Menu> orderedItems = new Vector<>();
+        boolean ordering = true;
+        while (ordering) {
+            System.out.println("Pilih item untuk dipesan:");
+            System.out.println("1. Makanan");
+            System.out.println("2. Minuman");
+            System.out.println("3. Selesai memesan");
+            System.out.print("Pilihan Anda: ");
+            int choice = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice) {
+                case 1:
+                    try {
+                        Menu selectedFood = selectFoodItem();
+                        if (selectedFood != null) {
+                            orderedItems.add(selectedFood);
+                        }
+                    } catch (SQLException e) {
+                        System.out.println("Error saat mengambil daftar makanan: " + e.getMessage());
+                    }
+                    break;
+                case 2:
+                    try {
+                        Menu selectedBeverage = selectBeverageItem();
+                        if (selectedBeverage != null) {
+                            orderedItems.add(selectedBeverage);
+                        }
+                    } catch (SQLException e) {
+                        System.out.println("Error saat mengambil daftar minuman: " + e.getMessage());
+                    }
+                    break;
+                case 3:
+                    ordering = false;
+                    break;
+                default:
+                    System.out.println("Pilihan tidak valid.");
+                    break;
+            }
+        }
+
+        if (!orderedItems.isEmpty()) {
+            try {
+                order.placeOrder(currentCustomer, orderedItems, currentCashier);
+                double totalAmount = order.calculateTotalAmount(orderedItems);
+                order.makePayment(currentCustomer, totalAmount);
+                printInvoice(currentCustomer, orderedItems, totalAmount, currentCashier);
+            } catch (SQLException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Tidak ada item yang dipesan.");
+        }
+    }
+
+    Menu selectFoodItem() throws SQLException {
+        Food food = new Food();
+        Vector<Menu> menuItems = food.getMenuItems();
+    	FoodMenu();
+
+        int index = 1;
+        for (Menu item : menuItems) {
+            Food specificFood = (Food) item; // Casting ke Food
+            System.out.printf("| %-3d | %-10s | %-29s | %-20s | %-12s |\n",index,
+            		specificFood.getItemID(), specificFood.getItemName(), specificFood.getFoodCategory(), specificFood.getPrice());
+//            System.out.println(index + ". ID: " + specificFood.getItemID() + ", " + specificFood.getItemName() + ", Kategori: " + specificFood.getFoodCategory() + ", Harga: " + specificFood.getPrice());
+            index++;
+        }
+        System.out.println("==========================================================================================");
+        System.out.println("Pilih Makanan:");
+        System.out.println("0. Kembali");
+        System.out.print("Pilihan Anda: ");
+        int choice = sc.nextInt();
+        sc.nextLine();
+
+        if (choice > 0 && choice <= menuItems.size()) {
+            return menuItems.get(choice - 1); // Tidak perlu casting di sini karena mengembalikan Menu
+        }
+        return null;
+    }
+
+
+    Menu selectBeverageItem() throws SQLException {
+        Beverage beverage = new Beverage();
+        Vector<Menu> menuItems = beverage.getMenuItems();
+        BeverageMenu();
+        int index = 1;
+        for (Menu item : menuItems) {
+            Beverage specificBeverage = (Beverage) item; // Casting ke Beverage
+            System.out.printf("| %-3d | %-11s | %-20s | %-15s | %-10s | %-12s |\n",index,
+            		specificBeverage.getItemID(), specificBeverage.getItemName(), specificBeverage.getBeverageType(),
+                    (specificBeverage.isCarbonated() ? "Ya" : "Tidak"), specificBeverage.getPrice());
+//            System.out.println(index + ". ID: " + specificBeverage.getItemID() + ", " + specificBeverage.getItemName() + ", Tipe: " + specificBeverage.getBeverageType() + ", Berkarbonasi: " + (specificBeverage.isCarbonated() ? "Ya" : "Tidak") + ", Harga: " + specificBeverage.getPrice());
+            index++;
+        }
+        System.out.println("==========================================================================================");
+        System.out.println("Pilih Minuman:");
+        System.out.println("0. Kembali");
+        System.out.print("Pilihan Anda: ");
+        int choice = sc.nextInt();
+        sc.nextLine();
+
+        if (choice > 0 && choice <= menuItems.size()) {
+            return menuItems.get(choice - 1); // Tidak perlu casting di sini karena mengembalikan Menu
+        }
+        return null;
+    }
+
+
+    void printInvoice(Customer customer, Vector<Menu> orderedItems, double totalAmount, Cashier cashier) {
+        System.out.println("\n========= Invoice =========");
+        System.out.println("Pelanggan : " + customer.getName()+"ID: "+customer.getId());
+        System.out.println("Kasir     : " + cashier.getName() + " (ID: " + cashier.getId() + ")");
+        System.out.println("Item yang dipesan:");
+        for (Menu item : orderedItems) {
+            System.out.println("- " + item.getItemName() + ": " + item.getPrice());
+        }
+        System.out.println("Total Pembayaran: " + totalAmount);
+        System.out.println("=============================");
+    }
 
 	
 	public Main() throws SQLException {
 		// Start
 
 		boolean check=true;
+		Cashier cashier = null;
         while (check) {
     		UILogReg();
             int option = sc.nextInt();
@@ -353,7 +712,7 @@ public class Main {
 
             switch (option) {
                 case 1:
-                	attemptLogin();
+                	cashier=attemptLogin();
                 	check=false;
                     break;
                 case 2:
@@ -386,12 +745,15 @@ public class Main {
 					break;
 
 				case 3:
-//					handleTopUpBalance(cust);
+					handleTopUpBalance(cust);
+			        Utility.PressEnter();
+			        Utility.Cls();
 					break;
 				
 				case 4: 
-					// pesan dan pembayaran berdasarkan katalog makanan dan saldo yang dimiliki oleh user
-					System.out.println("test");
+					processOrder(cashier);
+			        Utility.PressEnter();
+			        Utility.Cls();
 					break;
 				
 				case 5:

@@ -7,6 +7,6 @@ import java.util.Vector;
 //Interface untuk manajemen data pemesanan
 
 public interface OrderManagement {
-	void placeOrder(Customer customer, Vector<Menu> orderedItems) throws SQLException;
+	public void placeOrder(Customer customer, Vector<Menu> orderedItems, Cashier cashier) throws SQLException;
 	
 }
