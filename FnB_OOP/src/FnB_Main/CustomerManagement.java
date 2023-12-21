@@ -12,4 +12,5 @@ public interface CustomerManagement {
     public Customer getCustomerByPhone(String phone) throws SQLException;
     void topUpBalance(String name, double amount) throws SQLException;
     void viewAllCustomers() throws SQLException;
+
 }
