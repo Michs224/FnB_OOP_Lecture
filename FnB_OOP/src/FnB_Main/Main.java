@@ -26,7 +26,6 @@ public class Main {
         System.out.println("4. Pesan dan pembayaran");
         System.out.println("5. Exit");
         System.out.print("Choice >> ");
-        System.out.println("gg");
     }
     
     
@@ -137,7 +136,7 @@ public class Main {
     boolean register(String username, String password, String name) throws SQLException {
         try (Connection connection = DatabaseConnection.getConnection()) {
             // Cek apakah username sudah ada
-            String checkUserQuery = "SELECT * FROM cashiers WHERE username = ?";
+            String checkUserQuery = "SELECT username FROM cashiers WHERE username = ?";
             try (PreparedStatement checkUserStmt = connection.prepareStatement(checkUserQuery)) {
                 checkUserStmt.setString(1, username);
                 ResultSet resultSet = checkUserStmt.executeQuery();
@@ -188,9 +187,9 @@ public class Main {
                 System.out.println("Registration successful. Please log in.");
             } else {
                 System.out.println("Registration failed. User may already exist.");
-            }    		
+            }
+            System.out.println(register(username, password, name));
     	}while(!register(username, password, name));
-
     }
 	
 	public Main() throws SQLException {
