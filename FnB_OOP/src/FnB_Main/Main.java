@@ -128,10 +128,25 @@ public class Main {
 	        System.out.println("Error topping up balance: " + e.getMessage());
 	    }
 	}
-    String login(String username, String password) {
-		return "";
-        // Logic to verify login credentials
-    }
+	String login(String username, String password) throws SQLException {
+	    try (Connection connection = DatabaseConnection.getConnection()) {
+	        String query = "SELECT cashier_name FROM cashiers WHERE username = ? AND password = ?";
+	        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+	            preparedStatement.setString(1, username);
+	            preparedStatement.setString(2, password);
+
+	            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+	                if (resultSet.next()) {
+	                    return resultSet.getString("cashier_name"); // Return cashier's name if login bisa
+	                }
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return null;
+	}
+
 
     boolean register(String username, String password, String name) throws SQLException {
         try (Connection connection = DatabaseConnection.getConnection()) {
@@ -141,7 +156,7 @@ public class Main {
                 checkUserStmt.setString(1, username);
                 ResultSet resultSet = checkUserStmt.executeQuery();
                 if (resultSet.next()) {
-                    System.out.println("Username already exists.");
+//                    System.out.println("Username already exists.");
                     return false;
                 }
             }
@@ -163,19 +178,25 @@ public class Main {
     }
 
     
-    String attemptLogin() {
+    void attemptLogin() throws SQLException {
         System.out.print("Enter username: ");
         String username = sc.nextLine();
         System.out.print("Enter password: ");
         String password = sc.nextLine();
 
-        return login(username, password);
+        String cashierName = login(username, password);
+        if (cashierName != null) {
+            System.out.println("Login successful. Welcome, " + cashierName + "!");
+            // Proceed with next steps after successful login
+        } else {
+            System.out.println("Login failed. Invalid username or password.");
+        }
     }
 
-    void attemptRegistration() throws SQLException{
-    	
-    	String username,password,name;
-    	do {
+    void attemptRegistration() throws SQLException {
+        String username, password, name;
+        boolean isRegistered = false;
+        while (!isRegistered) {
             System.out.print("Enter username: ");
             username = sc.nextLine();
             System.out.print("Enter password: ");
@@ -183,19 +204,19 @@ public class Main {
             System.out.print("Enter full name: ");
             name = sc.nextLine();
 
-            if (register(username, password, name)) {
+            isRegistered = register(username, password, name);
+            if (isRegistered) {
                 System.out.println("Registration successful. Please log in.");
             } else {
                 System.out.println("Registration failed. User may already exist.");
             }
-            System.out.println(register(username, password, name));
-    	}while(!register(username, password, name));
+        }
     }
+
 	
 	public Main() throws SQLException {
 		// Start
-		Connection connection = DatabaseConnection.getConnection();
-		System.out.println("Test");
+
 		boolean check=true;
         while (check) {
             System.out.println("Welcome to the Cashier System!");
@@ -208,15 +229,10 @@ public class Main {
 
             switch (option) {
                 case 1:
-                	String cashiername;
-                	cashiername=attemptLogin();
-                    if (cashiername!=null) {
-                        check=false;
-                    }
+                	attemptLogin();
                     break;
                 case 2:
-                    attemptRegistration();
-                        check=false;                    	
+                    attemptRegistration();                   	
                     break;
                 case 3:
                     System.out.println("Exiting system...");
