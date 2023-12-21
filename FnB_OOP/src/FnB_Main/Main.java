@@ -415,7 +415,8 @@ public class Main {
                 validatePassword(password);
                 passwordValid=true;
         	}catch(IllegalArgumentException e) {
-    			System.out.println("\n"+e.toString()+"\n");
+    			System.out.println("\n"+e.toString());
+    			Utility.PressEnter();
     			Utility.Cls();
     			UILogReg();
                 System.out.print("2\nEnter username: "+username+"\n");
@@ -487,7 +488,6 @@ public class Main {
             }
             Utility.PressEnter();
             Utility.Cls();
-            UILogReg();
         }
     }
     
@@ -515,7 +515,7 @@ public class Main {
         System.out.println("==========================================================================================");
         System.out.println("|                                     Beverages                                          |");
         System.out.println("==========================================================================================");
-        System.out.printf("| %-2s | %-11s | %-20s | %-15s | %-10s | %-12s |\n",bid,bn,bt,carb,pr);
+        System.out.printf("| %-2s | %-11s | %-20s | %-15s | %-10s | %-12s |\n","No.",bid,bn,bt,carb,pr);
         System.out.println("==========================================================================================");
     }
     
@@ -620,13 +620,17 @@ public class Main {
         }
 
         if (!orderedItems.isEmpty()) {
-            try {
-                order.placeOrder(currentCustomer, orderedItems, currentCashier);
-                double totalAmount = order.calculateTotalAmount(orderedItems);
-                order.makePayment(currentCustomer, totalAmount);
-                printInvoice(currentCustomer, orderedItems, totalAmount, currentCashier);
-            } catch (SQLException e) {
-                System.out.println("Error: " + e.getMessage());
+            double totalAmount = order.calculateTotalAmount(orderedItems);
+            if (currentCustomer.getBalance() >= totalAmount) {
+                try {
+                    order.placeOrder(currentCustomer, orderedItems, currentCashier);
+                    order.makePayment(currentCustomer, totalAmount);
+                    printInvoice(currentCustomer, orderedItems, totalAmount, currentCashier);
+                } catch (SQLException e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
+            } else {
+                System.out.println("Saldo tidak mencukupi untuk melakukan pembayaran.");
             }
         } else {
             System.out.println("Tidak ada item yang dipesan.");

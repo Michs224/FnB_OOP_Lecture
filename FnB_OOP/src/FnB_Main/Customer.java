@@ -171,19 +171,19 @@ public class Customer implements CustomerManagement {
                     }
                     
                    
-                    System.out.println("+--------------------------------+--------------+--------------------------------+-----------+");
-                    System.out.printf("| %-30s | %-12s | %-30s | %-9s |\n", "Customer Name", "Phone", "Address", "Balance");
-                    System.out.println("+--------------------------------+--------------+--------------------------------+-----------+");
+                    System.out.println("+--------------------------------+--------------+--------------------------------+------------+");
+                    System.out.printf("| %-30s | %-12s | %-30s | %-10s |\n", "Customer Name", "Phone", "Address", "Balance");
+                    System.out.println("+--------------------------------+--------------+--------------------------------+------------+");
                     
                     
                     while (resultSet.next()) {
-                        System.out.printf("| %-30s | %-12s | %-30s | %-9.2f |\n",
+                        System.out.printf("| %-30s | %-12s | %-30s | %-10.2f |\n",
                             resultSet.getString("customer_name"),
                             resultSet.getString("phone"),
                             resultSet.getString("address"),
                             resultSet.getDouble("balance"));
                     }
-                    System.out.println("+--------------------------------+--------------+--------------------------------+-----------+");
+                    System.out.println("+--------------------------------+--------------+--------------------------------+------------+");
                 }
             }
         }
