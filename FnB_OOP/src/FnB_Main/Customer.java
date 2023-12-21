@@ -307,6 +307,7 @@ public class Customer implements CustomerManagement {
             }
         }
     }
+    //s
 
     public void updateCustomerBalance(String phone, double newBalance) throws SQLException {
         try (Connection connection = DatabaseConnection.getConnection()) {
