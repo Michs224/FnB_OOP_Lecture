@@ -35,6 +35,7 @@ public class Beverage extends Menu {
         return isCarbonated;
     }
 
+    @Override
     public Vector<Menu> getMenuItems() throws SQLException {
         Vector<Menu> menuItems = new Vector<>();
         try (Connection connection = DatabaseConnection.getConnection()) {

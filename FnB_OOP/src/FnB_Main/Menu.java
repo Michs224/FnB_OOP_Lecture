@@ -1,6 +1,7 @@
 package FnB_Main;
 
 import java.sql.SQLException;
+import java.util.Vector;
 
 public abstract class Menu {
 	
@@ -42,5 +43,6 @@ public abstract class Menu {
 
 
 	public abstract boolean printMenu() throws SQLException;
+	public abstract Vector<Menu> getMenuItems() throws SQLException;
 
 }

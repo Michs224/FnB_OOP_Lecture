@@ -25,7 +25,8 @@ public class Food extends Menu {
     public FoodCategory getFoodCategory() {
         return foodCategory;
     }
-
+    
+    @Override
     public Vector<Menu> getMenuItems() throws SQLException {
         Vector<Menu> menuItems = new Vector<>();
         try (Connection connection = DatabaseConnection.getConnection()) {
