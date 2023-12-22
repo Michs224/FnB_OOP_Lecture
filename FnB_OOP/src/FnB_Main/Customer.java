@@ -191,21 +191,38 @@ public class Customer implements CustomerManagement {
 
 
     @Override
-    public void topUpBalance(String name, double amount) throws SQLException {
+        public void topUpBalance(String phone, double amount) throws SQLException {
         try (Connection connection = DatabaseConnection.getConnection()) {
-            String query = "UPDATE customers SET balance = balance + ? WHERE name = ?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setDouble(1, amount);
-                preparedStatement.setString(2, name);
+            // Retrieve the current balance
+            String queryGetBalance = "SELECT balance FROM customers WHERE phone = ?";
+            double currentBalance;
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(queryGetBalance)) {
+                preparedStatement.setString(1, phone);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (!resultSet.next()) {
+                        throw new SQLException("Customer not found.");
+                    }
+                    currentBalance = resultSet.getDouble("balance");
+                }
+            }
+
+            // Update the balance
+            String queryUpdateBalance = "UPDATE customers SET balance = ? WHERE phone = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(queryUpdateBalance)) {
+                preparedStatement.setDouble(1, currentBalance + amount);
+                preparedStatement.setString(2, phone);
 
                 int rowsAffected = preparedStatement.executeUpdate();
-
-                if (rowsAffected > 0) {
-                    System.out.println("Saldo berhasil ditambahkan.");
-                } else {
-                    System.out.println("Gagal menambahkan saldo.");
+                if (rowsAffected == 0) {
+                    throw new SQLException("Update failed, no rows affected.");
                 }
             }
         }
     }
+
+
+    
+    
+    
 }

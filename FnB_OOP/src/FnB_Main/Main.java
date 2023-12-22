@@ -44,7 +44,179 @@ public class Main {
         if (!phone.matches("08\\d{10}") || phone.length() != 12) {
             throw new IllegalArgumentException("Nomor telepon tidak valid. Harus diawali '08' dan panjang 12 karakter.");
         }
+    }		
+	
+    void validatePassword(String password) {
+        if (password.isEmpty()) {
+            throw new IllegalArgumentException("Password tidak boleh kosong!");
+        }
+        if (!password.matches(".*[a-zA-Z].*")) {
+            throw new IllegalArgumentException("Password harus mengandung setidaknya satu huruf.");
+        }
+        if (!password.matches(".*[0-9].*")) {
+            throw new IllegalArgumentException("Password harus mengandung setidaknya satu angka.");
+        }
+        if (!password.matches(".*[!@#$%^&*()_?].*")) {
+            throw new IllegalArgumentException("Password harus mengandung setidaknya satu simbol.");
+        }
+        if (password.matches(".*\\s.*")) {
+            throw new IllegalArgumentException("Password tidak boleh mengandung spasi.");
+        }
     }
+
+	
+	void validateName(String nama){
+		if (nama.isEmpty()){
+			throw new IllegalArgumentException("Nama tidak boleh kosong!");
+		}
+		else if(!nama.matches("^[a-zA-Z ]+$")) {
+			throw new IllegalArgumentException("Nama tidak boleh mengandung angka atau simbol");
+		}
+		
+	}
+	
+	
+    Cashier login(String username, String password) throws SQLException {
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            String query = "SELECT cashier_id, cashier_name FROM cashiers WHERE username = ? AND password = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, username);
+                preparedStatement.setString(2, password);
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        return new Cashier(
+                            resultSet.getInt("cashier_id"),
+                            resultSet.getString("cashier_name")
+                        );
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+
+    boolean register(String username, String password, String name) throws SQLException {
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            // Cek apakah username sudah ada
+            String checkUserQuery = "SELECT username FROM cashiers WHERE username = ?";
+            try (PreparedStatement checkUserStmt = connection.prepareStatement(checkUserQuery)) {
+                checkUserStmt.setString(1, username);
+                ResultSet resultSet = checkUserStmt.executeQuery();
+                if (resultSet.next()) {
+//                    System.out.println("Username already exists.");
+                    return false;
+                }
+            }
+
+            // Jika username belum ada, lakukan pendaftaran
+            String query = "INSERT INTO cashiers (username, password, cashier_name) VALUES (?, ?, ?)";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, username);
+                preparedStatement.setString(2, password);
+                preparedStatement.setString(3, name);
+
+                preparedStatement.executeUpdate();
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    
+    Cashier attemptLogin() throws SQLException {
+        System.out.print("Enter username: ");
+        String username = sc.nextLine();
+        String password=null;
+		boolean passwordValid=false;
+        
+        do {
+        	try {
+                System.out.print("Enter password: ");
+                password = sc.nextLine().trim();
+                validatePassword(password);
+                passwordValid=true;
+        	}catch(IllegalArgumentException e) {
+    			System.out.println("\n"+e.toString());
+    			Utility.PressEnter();
+    			Utility.Cls();
+    			UILogReg();
+                System.out.print("1\nEnter username: "+username+"\n");
+        	}
+
+        }while(!passwordValid);
+
+        Cashier cashier = login(username, password);
+        if (cashier != null) {
+            System.out.println("\nLogin successful. Welcome, " + cashier.getName() + "!\n");
+        } else {
+            System.out.println("\nLogin failed. Invalid username or password.\n");
+        }
+        Utility.PressEnter();
+        Utility.Cls();
+		return cashier;
+
+    }
+   
+
+    void attemptRegistration() throws SQLException {
+        String username=null, password = null, name=null;
+        boolean isRegistered = false;
+        while (!isRegistered) {
+            System.out.print("Enter username: ");
+            username = sc.nextLine();
+            
+    		boolean passwordValid=false;
+            
+            do {
+            	try {
+                    System.out.print("Enter password: ");
+                    password = sc.nextLine().trim();
+                    validatePassword(password);
+                    passwordValid=true;
+            	}catch(IllegalArgumentException e) {
+        			System.out.println("\n"+e.toString()+"\n");
+        			Utility.PressEnter();
+        			Utility.Cls();
+        			UILogReg();
+                    System.out.print("2\nEnter username: "+username+"\n");
+            	}
+
+            }while(!passwordValid);
+            
+            boolean nameValid=false;
+            do {
+            	try {
+                    System.out.print("Enter full name: ");
+                    name = sc.nextLine().trim();
+                    validateName1(name);
+                    nameValid=true;
+            	}catch(IllegalArgumentException e) {
+        			System.out.println("\n"+e.toString()+"\n");
+        			Utility.PressEnter();
+        			Utility.Cls();
+        			UILogReg();
+                    System.out.print("2\nEnter username: "+username+"\n");
+                    System.out.print("2\nEnter password: "+password+"\n");
+            	}
+
+            }while(!nameValid);
+            
+            isRegistered = register(username, password, name);
+            if (isRegistered) {
+                System.out.println("\nRegistration successful. Please log in.\n");
+            } else {
+                System.out.println("\nRegistration failed. User may already exist.\n");
+            }
+            Utility.PressEnter();
+            Utility.Cls();
+        }
+    }
+    
+    
     
     
     void ManajemenData(Customer cust) {
@@ -280,10 +452,10 @@ public class Main {
                         String confirmation = sc.nextLine().trim();
                         if (confirmation.equalsIgnoreCase("y")) {
                             cust.deleteCustomer(phoneToDelete);
-                            System.out.println("Data pelanggan berhasil dihapus.");
+                            System.out.println("\nData pelanggan berhasil dihapus.");
                             Utility.PressEnter();
                         } else {
-                            System.out.println("Penghapusan dibatalkan.");
+                            System.out.println("\nPenghapusan dibatalkan.");
                             Utility.PressEnter();
                         }
                         phoneValid = true;
@@ -319,177 +491,6 @@ public class Main {
         }
     }
     
-		
-	
-    void validatePassword(String password) {
-        if (password.isEmpty()) {
-            throw new IllegalArgumentException("Password tidak boleh kosong!");
-        }
-        if (!password.matches(".*[a-zA-Z].*")) {
-            throw new IllegalArgumentException("Password harus mengandung setidaknya satu huruf.");
-        }
-        if (!password.matches(".*[0-9].*")) {
-            throw new IllegalArgumentException("Password harus mengandung setidaknya satu angka.");
-        }
-        if (!password.matches(".*[!@#$%^&*()_?].*")) {
-            throw new IllegalArgumentException("Password harus mengandung setidaknya satu simbol.");
-        }
-        if (password.matches(".*\\s.*")) {
-            throw new IllegalArgumentException("Password tidak boleh mengandung spasi.");
-        }
-    }
-
-	
-	void validateName(String nama){
-		if (nama.isEmpty()){
-			throw new IllegalArgumentException("Nama tidak boleh kosong!");
-		}
-		else if(!nama.matches("^[a-zA-Z ]+$")) {
-			throw new IllegalArgumentException("Nama tidak boleh mengandung angka atau simbol");
-		}
-		
-	}
-	
-	
-    Cashier login(String username, String password) throws SQLException {
-        try (Connection connection = DatabaseConnection.getConnection()) {
-            String query = "SELECT cashier_id, cashier_name FROM cashiers WHERE username = ? AND password = ?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, username);
-                preparedStatement.setString(2, password);
-
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    if (resultSet.next()) {
-                        return new Cashier(
-                            resultSet.getInt("cashier_id"),
-                            resultSet.getString("cashier_name")
-                        );
-                    }
-                }
-            }
-        }
-        return null;
-    }
-
-
-    boolean register(String username, String password, String name) throws SQLException {
-        try (Connection connection = DatabaseConnection.getConnection()) {
-            // Cek apakah username sudah ada
-            String checkUserQuery = "SELECT username FROM cashiers WHERE username = ?";
-            try (PreparedStatement checkUserStmt = connection.prepareStatement(checkUserQuery)) {
-                checkUserStmt.setString(1, username);
-                ResultSet resultSet = checkUserStmt.executeQuery();
-                if (resultSet.next()) {
-//                    System.out.println("Username already exists.");
-                    return false;
-                }
-            }
-
-            // Jika username belum ada, lakukan pendaftaran
-            String query = "INSERT INTO cashiers (username, password, cashier_name) VALUES (?, ?, ?)";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, username);
-                preparedStatement.setString(2, password);
-                preparedStatement.setString(3, name);
-
-                preparedStatement.executeUpdate();
-                return true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    
-    Cashier attemptLogin() throws SQLException {
-        System.out.print("Enter username: ");
-        String username = sc.nextLine();
-        String password=null;
-		boolean passwordValid=false;
-        
-        do {
-        	try {
-                System.out.print("Enter password: ");
-                password = sc.nextLine().trim();
-                validatePassword(password);
-                passwordValid=true;
-        	}catch(IllegalArgumentException e) {
-    			System.out.println("\n"+e.toString());
-    			Utility.PressEnter();
-    			Utility.Cls();
-    			UILogReg();
-                System.out.print("2\nEnter username: "+username+"\n");
-        	}
-
-        }while(!passwordValid);
-
-        Cashier cashier = login(username, password);
-        if (cashier != null) {
-            Utility.Cls();
-            System.out.println("Login successful. Welcome, " + cashier.getName() + "!");
-            return cashier;
-        } else {
-            System.out.println("\nLogin failed. Invalid username or password.");
-        }
-		return cashier;
-
-    }
-   
-
-    void attemptRegistration() throws SQLException {
-        String username=null, password = null, name=null;
-        boolean isRegistered = false;
-        while (!isRegistered) {
-            System.out.print("Enter username: ");
-            username = sc.nextLine();
-            
-    		boolean passwordValid=false;
-            
-            do {
-            	try {
-                    System.out.print("Enter password: ");
-                    password = sc.nextLine().trim();
-                    validatePassword(password);
-                    passwordValid=true;
-            	}catch(IllegalArgumentException e) {
-        			System.out.println("\n"+e.toString()+"\n");
-        			Utility.PressEnter();
-        			Utility.Cls();
-        			UILogReg();
-                    System.out.print("2\nEnter username: "+username+"\n");
-            	}
-
-            }while(!passwordValid);
-            
-            boolean nameValid=false;
-            do {
-            	try {
-                    System.out.print("Enter full name: ");
-                    name = sc.nextLine().trim();
-                    validateName1(name);
-                    nameValid=true;
-            	}catch(IllegalArgumentException e) {
-        			System.out.println("\n"+e.toString()+"\n");
-        			Utility.PressEnter();
-        			Utility.Cls();
-        			UILogReg();
-                    System.out.print("2\nEnter username: "+username+"\n");
-                    System.out.print("2\nEnter password: "+password+"\n");
-            	}
-
-            }while(!nameValid);
-            
-            isRegistered = register(username, password, name);
-            if (isRegistered) {
-                System.out.println("\nRegistration successful. Please log in.");
-            } else {
-                System.out.println("Registration failed. User may already exist.");
-            }
-            Utility.PressEnter();
-            Utility.Cls();
-        }
-    }
     
     void UILogReg() {
         System.out.println("-------- Welcome to the Cashier System! -------");
@@ -541,19 +542,59 @@ public class Main {
         }
     }
     
-	void handleTopUpBalance(CustomerManagement customerManagement) {
-	    System.out.print("Masukkan nama pelanggan untuk top up saldo: ");
-	    String customerName = sc.nextLine();
-	    System.out.print("Masukkan jumlah saldo yang ingin ditambahkan: ");
-	    double topUpAmount = sc.nextDouble();
-	    sc.nextLine();
+       
+    
+    void handleTopUpBalance(CustomerManagement customerManagement) {
+        boolean phoneValid = false;
+        String phoneToTopUp= "";
+        Customer existingCustomer = null;
 
-	    try {
-	        customerManagement.topUpBalance(customerName, topUpAmount);
-	    } catch (Exception e) {
-	        System.out.println("Error topping up balance: " + e.getMessage());
-	    }
-	}
+        while (!phoneValid) {
+            try {
+                System.out.print("Masukkan nomor telepon pelanggan untuk top up saldo: ");
+                phoneToTopUp = sc.nextLine().trim();
+                validatePhone(phoneToTopUp);
+
+                existingCustomer = customerManagement.getCustomerByPhone(phoneToTopUp);
+                if (existingCustomer == null) {
+                    throw new IllegalArgumentException("Pelanggan dengan nomor telepon tersebut tidak ditemukan.");
+                }
+
+                phoneValid = true;
+            } catch (IllegalArgumentException e) {
+                System.out.println("\n" + e.getMessage() + "\n");
+            } catch (SQLException e) {
+                System.out.println("\nError accessing database: " + e.getMessage() + "\n");
+            }
+        }
+       
+        System.out.println("Nama Customer: " + existingCustomer.getName());
+        double oldBalance = existingCustomer.getBalance();
+        System.out.println("Saldo lama: " + oldBalance);
+     
+        
+
+        System.out.print("Masukkan jumlah saldo yang ingin ditambahkan: ");
+        double topUpAmount = sc.nextDouble();
+        sc.nextLine();
+
+        double newBalance = oldBalance + topUpAmount;
+        System.out.println("Saldo baru akan menjadi: " + newBalance);
+        System.out.print("Konfirmasi top up (y/n): ");
+        String confirmation = sc.nextLine().trim();
+
+        if (confirmation.equalsIgnoreCase("y")) {
+            try {
+                customerManagement.topUpBalance(phoneToTopUp, topUpAmount);
+                System.out.println("\nSaldo berhasil ditambahkan.");
+            } catch (Exception e) {
+                System.out.println("Error topping up balance: " + e.getMessage());
+            }
+        } else {
+            System.out.println("\nTop up dibatalkan.");
+        }
+        Utility.PressEnter();
+    }
 	
 	
     Customer authenticateCustomer() {
@@ -717,7 +758,9 @@ public class Main {
             switch (option) {
                 case 1:
                 	cashier=attemptLogin();
-                	check=false;
+                	if (cashier!=null) {
+                		check=false;
+                	}
                     break;
                 case 2:
                     attemptRegistration();
@@ -750,7 +793,6 @@ public class Main {
 
 				case 3:
 					handleTopUpBalance(cust);
-			        Utility.PressEnter();
 			        Utility.Cls();
 					break;
 				
