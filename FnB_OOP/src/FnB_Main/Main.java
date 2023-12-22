@@ -32,17 +32,17 @@ public class Main {
     
     void validateName1(String name) throws IllegalArgumentException {
         if (name.isEmpty() || !name.matches("[a-zA-Z ]+")) {
-            throw new IllegalArgumentException("Nama tidak valid. Harus berupa huruf dan tidak boleh kosong.");
+            throw new IllegalArgumentException("\nNama tidak valid. Harus berupa huruf dan tidak boleh kosong.");
         }
     }
     void validateAddress(String address) throws IllegalArgumentException {
         if (address.isEmpty()) {
-            throw new IllegalArgumentException("Alamat tidak boleh kosong.");
+            throw new IllegalArgumentException("\nAlamat tidak boleh kosong.");
         }
     }
     void validatePhone(String phone) throws IllegalArgumentException {
         if (!phone.matches("08\\d{10}") || phone.length() != 12) {
-            throw new IllegalArgumentException("Nomor telepon tidak valid. Harus diawali '08' dan panjang 12 karakter.");
+            throw new IllegalArgumentException("\nNomor telepon tidak valid. Harus diawali '08' dan panjang 12 karakter.");
         }
     }		
 	
@@ -237,8 +237,9 @@ public class Main {
             System.out.print("Choice >> ");
 
             if (!sc.hasNextInt()) {
-                System.out.println("Invalid input, please enter a number.");
-                sc.nextLine(); // clear the invalid input
+                System.out.println("\nInvalid input, please enter a number.\n");
+                sc.nextLine();
+                Utility.PressEnter();
                 continue;
             }
 
@@ -282,7 +283,7 @@ public class Main {
 
                         Customer existingCustomer = cust.getCustomerByPhone(phone);
                         if (existingCustomer != null) {
-                            throw new IllegalArgumentException("Nomor telepon sudah digunakan oleh pelanggan lain.");
+                            throw new IllegalArgumentException("\nNomor telepon sudah digunakan oleh pelanggan lain.\n");
                         }
 
                         phoneValid = true;
@@ -296,10 +297,10 @@ public class Main {
                 initialBalance = 0;
                 try {
                     cust.addCustomer(name, address, initialBalance, phone);
-                    System.out.println("Data pelanggan berhasil ditambahkan.");
+                    System.out.println("\nData pelanggan berhasil ditambahkan.\n");
                     Utility.PressEnter();
                 } catch (SQLException e) {
-                    System.out.println("Error: " + e.getMessage());
+                    System.out.println("\nError: " + e.getMessage());
                 }
                 break;
 
@@ -316,7 +317,7 @@ public class Main {
 
                         existingCustomer = cust.getCustomerByPhone(phoneToUpdate);
                         if (existingCustomer == null) {
-                            throw new IllegalArgumentException("Nomor telepon tidak ditemukan.");
+                            throw new IllegalArgumentException("\nNomor telepon tidak ditemukan.\n");
                         }
 
                         phoneValid = true;
@@ -350,7 +351,7 @@ public class Main {
                                     System.out.println("Konfirmasi perubahan alamat dari '" + existingCustomer.getAddress() + "' ke '" + newAddress + "'? (y/n)");
                                     if (sc.nextLine().trim().equalsIgnoreCase("y")) {
                                         cust.updateCustomerAddress(phoneToUpdate, newAddress);
-                                        System.out.println("Alamat diperbarui.");
+                                        System.out.println("\nAlamat diperbarui.\n");
                                         Utility.PressEnter();
                                     }
                                 }
@@ -372,24 +373,24 @@ public class Main {
                                             String confirmation = sc.nextLine().trim();
                                             if (confirmation.equalsIgnoreCase("y")) {
                                                 cust.updateCustomerName(phoneToUpdate, newName);
-                                                System.out.println("Nama diperbarui.");
+                                                System.out.println("\nNama diperbarui.\n");
                                                 Utility.PressEnter();
                                                 nameValid = true;
                                             } else if (confirmation.equalsIgnoreCase("n")) {
-                                                System.out.println("Perubahan nama dibatalkan.");
+                                                System.out.println("\nPerubahan nama dibatalkan.\n");
                                                 Utility.PressEnter();
                                                 nameValid = true;
                                             } else {
                                                 System.out.println("Masukkan 'y' untuk ya atau 'n' untuk tidak.");
                                             }
                                         } else {
-                                            System.out.println("Nama baru sama dengan nama lama. Tidak ada perubahan yang dilakukan.");
+                                            System.out.println("\nNama baru sama dengan nama lama. Tidak ada perubahan yang dilakukan.\n");
                                             nameValid = true;
                                         }
                                     } catch (IllegalArgumentException e) {
                                         System.out.println("\n" + e.getMessage() + "\n");
                                     } catch (SQLException e) {
-                                        System.out.println("Error updating customer: " + e.getMessage());
+                                        System.out.println("\nError updating customer: " + e.getMessage()+"\n");
                                         
                                     }
                                 }
@@ -404,7 +405,7 @@ public class Main {
                                     System.out.println("Konfirmasi perubahan saldo dari '" + existingCustomer.getBalance() + "' ke '" + newBalance + "'? (y/n)");
                                     if (sc.nextLine().trim().equalsIgnoreCase("y")) {
                                         cust.updateCustomerBalance(phoneToUpdate, newBalance);
-                                        System.out.println("Saldo diperbarui.");
+                                        System.out.println("\nSaldo diperbarui.\n");
                                         Utility.PressEnter();
                                     }
                                 }
@@ -414,19 +415,17 @@ public class Main {
                         }
                     }
                 } catch (SQLException e) {
-                    System.out.println("Error updating customer: " + e.getMessage());
+                    System.out.println("\nError updating customer: " + e.getMessage()+"\n");
                 } catch (Exception e) {
-                    System.out.println("Error searching for customer: " + e.getMessage());
+                    System.out.println("\nError searching for customer: " + e.getMessage()+"\n");
                 }
 
                 if (!found) {
-                    System.out.println("Data pelanggan tidak ditemukan.");
+                    System.out.println("\nData pelanggan tidak ditemukan.\n");
                     Utility.PressEnter();
                 }
                 break;
-
-                
-                
+              
 
             case 3:
                 phoneValid = false;
@@ -440,7 +439,7 @@ public class Main {
 
                         Customer customerToDelete = cust.getCustomerByPhone(phoneToDelete);
                         if (customerToDelete == null) {
-                            throw new IllegalArgumentException("Pelanggan dengan nomor telepon tersebut tidak ditemukan.");
+                            throw new IllegalArgumentException("\nPelanggan dengan nomor telepon tersebut tidak ditemukan.\n");
                         }
 
                         System.out.println("Apakah Anda yakin ingin menghapus data pelanggan berikut?");
@@ -452,10 +451,10 @@ public class Main {
                         String confirmation = sc.nextLine().trim();
                         if (confirmation.equalsIgnoreCase("y")) {
                             cust.deleteCustomer(phoneToDelete);
-                            System.out.println("\nData pelanggan berhasil dihapus.");
+                            System.out.println("\nData pelanggan berhasil dihapus.\n");
                             Utility.PressEnter();
                         } else {
-                            System.out.println("\nPenghapusan dibatalkan.");
+                            System.out.println("\nPenghapusan dibatalkan.\n");
                             Utility.PressEnter();
                         }
                         phoneValid = true;
@@ -473,7 +472,7 @@ public class Main {
                     cust.viewAllCustomers();
                     
                 } catch (SQLException e) {
-                    System.out.println("Error viewing customers: " + e.getMessage());
+                    System.out.println("\nError viewing customers: " + e.getMessage()+"\n");
                   
                 }
                 Utility.PressEnter();
@@ -484,7 +483,7 @@ public class Main {
                 break;
 
             default:
-                System.out.println("\nInvalid Input!, please input again");
+                System.out.println("\nInvalid Input!, please input again\n");
                 break;
             }
             Utility.Cls();
@@ -493,7 +492,9 @@ public class Main {
     
     
     void UILogReg() {
-        System.out.println("-------- Welcome to the Cashier System! -------");
+    	System.out.println("===============================================");
+        System.out.println("|------- Welcome to the Cashier System! ------|");
+    	System.out.println("===============================================");
         System.out.println("1. Login");
         System.out.println("2. Register");
         System.out.println("3. Exit");
@@ -536,9 +537,9 @@ public class Main {
             if (!beverageExists){
                 System.out.println("|           Tidak ada minuman yang tersedia.          |");
             }
-            System.out.println("==========================================================================================");
+            System.out.println("==========================================================================================\n");
         } catch (SQLException e) {
-            System.out.println("Error saat mencetak katalog: " + e.getMessage());
+            System.out.println("\nError saat mencetak katalog: " + e.getMessage()+"\n");
         }
     }
     
@@ -557,7 +558,7 @@ public class Main {
 
                 existingCustomer = customerManagement.getCustomerByPhone(phoneToTopUp);
                 if (existingCustomer == null) {
-                    throw new IllegalArgumentException("Pelanggan dengan nomor telepon tersebut tidak ditemukan.");
+                    throw new IllegalArgumentException("\nPelanggan dengan nomor telepon tersebut tidak ditemukan.\n");
                 }
 
                 phoneValid = true;
@@ -586,12 +587,12 @@ public class Main {
         if (confirmation.equalsIgnoreCase("y")) {
             try {
                 customerManagement.topUpBalance(phoneToTopUp, topUpAmount);
-                System.out.println("\nSaldo berhasil ditambahkan.");
+                System.out.println("\nSaldo berhasil ditambahkan.\n");
             } catch (Exception e) {
-                System.out.println("Error topping up balance: " + e.getMessage());
+                System.out.println("\nError topping up balance: " + e.getMessage()+"\n");
             }
         } else {
-            System.out.println("\nTop up dibatalkan.");
+            System.out.println("\nTop up dibatalkan.\n");
         }
         Utility.PressEnter();
     }
@@ -605,10 +606,10 @@ public class Main {
         try {
             customer = new Customer().getCustomerByPhone(phone);
             if (customer == null) {
-                System.out.println("Pelanggan tidak ditemukan.");
+                System.out.println("\nPelanggan tidak ditemukan.\n");
             }
         } catch (SQLException e) {
-            System.out.println("Error saat mengambil data pelanggan: " + e.getMessage());
+            System.out.println("\nError saat mengambil data pelanggan: " + e.getMessage()+"\n");
         }
 
         return customer;
@@ -638,7 +639,7 @@ public class Main {
                             orderedItems.add(selectedFood);
                         }
                     } catch (SQLException e) {
-                        System.out.println("Error saat mengambil daftar makanan: " + e.getMessage());
+                        System.out.println("\nError saat mengambil daftar makanan: " + e.getMessage()+"\n");
                     }
                     break;
                 case 2:
@@ -648,14 +649,14 @@ public class Main {
                             orderedItems.add(selectedBeverage);
                         }
                     } catch (SQLException e) {
-                        System.out.println("Error saat mengambil daftar minuman: " + e.getMessage());
+                        System.out.println("\nError saat mengambil daftar minuman: " + e.getMessage()+"\n");
                     }
                     break;
                 case 3:
                     ordering = false;
                     break;
                 default:
-                    System.out.println("Pilihan tidak valid.");
+                    System.out.println("\nPilihan tidak valid.\n");
                     break;
             }
         }
@@ -668,13 +669,13 @@ public class Main {
                     order.makePayment(currentCustomer, totalAmount);
                     printInvoice(currentCustomer, orderedItems, totalAmount, currentCashier);
                 } catch (SQLException e) {
-                    System.out.println("Error: " + e.getMessage());
+                    System.out.println("\nError: " + e.getMessage()+"\n");
                 }
             } else {
-                System.out.println("Saldo tidak mencukupi untuk melakukan pembayaran.");
+                System.out.println("\nSaldo tidak mencukupi untuk melakukan pembayaran.\n");
             }
         } else {
-            System.out.println("Tidak ada item yang dipesan.");
+            System.out.println("\nTidak ada item yang dipesan.\n");
         }
     }
 
@@ -734,14 +735,14 @@ public class Main {
 
     void printInvoice(Customer customer, Vector<Menu> orderedItems, double totalAmount, Cashier cashier) {
         System.out.println("\n========= Invoice =========");
-        System.out.println("Pelanggan : " + customer.getName()+"ID: "+customer.getId());
+        System.out.println("Pelanggan : " + customer.getName()+" (ID: "+customer.getId()+")");
         System.out.println("Kasir     : " + cashier.getName() + " (ID: " + cashier.getId() + ")");
         System.out.println("Item yang dipesan:");
         for (Menu item : orderedItems) {
             System.out.println("- " + item.getItemName() + ": " + item.getPrice());
         }
         System.out.println("Total Pembayaran: " + totalAmount);
-        System.out.println("=============================");
+        System.out.println("=============================\n");
     }
 
 	
@@ -769,7 +770,7 @@ public class Main {
                     System.out.println("Exiting system...");
                     System.exit(0);
                 default:
-                    System.out.println("Invalid option. Please try again.");
+                    System.out.println("\nInvalid option. Please try again.\n");
             }
         }
 		
@@ -806,7 +807,8 @@ public class Main {
 					break;
 
 				default:
-					System.out.println("\nInvalid Input!, please input again");
+					System.out.println("\nInvalid Input!, please input again\n");
+					Utility.PressEnter();
 					break;
 			}
 		} while (choice != 5);
