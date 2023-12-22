@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import Utility.Utility;
 
 // Kelas abstrak sebagai dasar untuk objek pelanggan
 
