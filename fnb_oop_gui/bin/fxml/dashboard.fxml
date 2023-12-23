@@ -1,0 +1,889 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="525.0" prefWidth="844.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fnb_oop.dashboardController">
+   <children>
+      <BorderPane layoutX="187.0" layoutY="93.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <AnchorPane prefHeight="531.0" prefWidth="845.0" style="-fx-background-color: #DB1934;" BorderPane.alignment="CENTER">
+               <children>
+                  <ScrollPane fx:id="dessertScroll" layoutX="63.0" layoutY="-4.0" prefHeight="532.0" prefWidth="779.0" style="-fx-background-color: transparent;" visible="false">
+                     <content>
+                        <AnchorPane prefHeight="776.0" prefWidth="762.0" style="-fx-background-color: #DB1934;">
+                           <children>
+                              <AnchorPane layoutX="39.0" layoutY="81.0" prefHeight="273.0" prefWidth="201.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
+                                 <children>
+                                    <ImageView fitHeight="115.0" fitWidth="198.0" layoutX="2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/foods/dessert/oatmeal%20pancakes%201.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="16.0" layoutY="137.0" text="Ayam goreng Suharti">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="16.0" layoutY="171.0">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="18.0" layoutY="205.0" text="Ayam">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="buttonMenu111" layoutX="35.0" layoutY="233.0" mnemonicParsing="false" onAction="#addFood" prefHeight="28.0" prefWidth="131.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 8;" text="Tambah">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <Label layoutX="127.0" layoutY="205.0" text="Rp 24.000">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="280.0" layoutY="81.0" prefHeight="273.0" prefWidth="201.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
+                                 <children>
+                                    <ImageView fitHeight="115.0" fitWidth="198.0" layoutX="2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/foods/dessert/Chocolate%20Cheesecake.jpeg" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="16.0" layoutY="137.0" text="Bakso Sapi dan Mie">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="16.0" layoutY="164.0" text="Pak Bagong">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="18.0" layoutY="205.0" text="Sapi">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="buttonMenu211" layoutX="35.0" layoutY="233.0" mnemonicParsing="false" onAction="#addFood" prefHeight="28.0" prefWidth="131.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 8;" text="Tambah">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <Label layoutX="127.0" layoutY="205.0" text="Rp 18.000">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="521.0" layoutY="81.0" prefHeight="273.0" prefWidth="201.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
+                                 <children>
+                                    <ImageView fitHeight="115.0" fitWidth="198.0" layoutX="2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/foods/dessert/vanilla%20ice%20cream%201.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="16.0" layoutY="137.0" text="Dimsum lantai 3">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="16.0" layoutY="164.0" text="Isi 3">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="18.0" layoutY="205.0" text="Dimsum">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="buttonMenu311" layoutX="35.0" layoutY="233.0" mnemonicParsing="false" onAction="#addFood" prefHeight="28.0" prefWidth="131.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 8;" text="Tambah">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <Label layoutX="127.0" layoutY="205.0" text="Rp 20.000">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="39.0" layoutY="403.0" prefHeight="273.0" prefWidth="201.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
+                                 <children>
+                                    <ImageView fitHeight="115.0" fitWidth="198.0" layoutX="2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/foods/dessert/vanilla%20ice%20cream%201.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="16.0" layoutY="137.0" text="Bebek Manis Kayak">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="16.0" layoutY="164.0" text="Kamu">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="18.0" layoutY="205.0" text="Bebek">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="buttonMenu411" layoutX="35.0" layoutY="233.0" mnemonicParsing="false" onAction="#addFood" prefHeight="28.0" prefWidth="131.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 8;" text="Tambah">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <Label layoutX="127.0" layoutY="205.0" text="Rp 28.000">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="280.0" layoutY="403.0" prefHeight="273.0" prefWidth="201.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
+                                 <children>
+                                    <ImageView fitHeight="115.0" fitWidth="198.0" layoutX="2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/foods/dessert/Caramel%20Applen%20Crumbs%202.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="16.0" layoutY="137.0" text="Sushi jejepangan">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="16.0" layoutY="171.0" text="Isi 6">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="18.0" layoutY="205.0" text="Sushi">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="buttonMenu511" layoutX="35.0" layoutY="233.0" mnemonicParsing="false" onAction="#addFood" prefHeight="28.0" prefWidth="131.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 8;" text="Tambah">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <Label layoutX="127.0" layoutY="205.0" text="Rp 32.000">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="521.0" layoutY="403.0" prefHeight="273.0" prefWidth="201.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
+                                 <children>
+                                    <ImageView fitHeight="115.0" fitWidth="198.0" layoutX="2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/foods/dessert/tiramissu%20cake.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="16.0" layoutY="137.0" text="Nasi goreng Bedeng">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="16.0" layoutY="171.0">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="18.0" layoutY="205.0" text="Nasi">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="buttonMenu611" layoutX="35.0" layoutY="233.0" mnemonicParsing="false" onAction="#addFood" prefHeight="28.0" prefWidth="131.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 8;" text="Tambah">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <Label layoutX="127.0" layoutY="205.0" text="Rp 13.000">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <Label fx:id="mainCourseButton11" layoutX="182.0" layoutY="36.0" onMouseClicked="#toMainCourse" text="Main Course" textFill="WHITE">
+                                 <font>
+                                    <Font name="Nirmala UI Bold" size="20.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Label>
+                              <Label fx:id="appetizerButton11" layoutX="336.0" layoutY="36.0" onMouseClicked="#toAppetizer" text="Appetizer" textFill="WHITE">
+                                 <font>
+                                    <Font name="Nirmala UI Bold" size="20.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Label>
+                              <Label fx:id="dessertButton11" layoutX="467.0" layoutY="36.0" onMouseClicked="#toDessert" text="Dessert" textFill="WHITE" underline="true">
+                                 <font>
+                                    <Font name="Nirmala UI Bold" size="20.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </ScrollPane>
+                  <ScrollPane fx:id="appetizerScroll" layoutX="63.0" layoutY="-4.0" prefHeight="532.0" prefWidth="779.0" style="-fx-background-color: transparent;" visible="false">
+                     <content>
+                        <AnchorPane prefHeight="776.0" prefWidth="762.0" style="-fx-background-color: #DB1934;">
+                           <children>
+                              <AnchorPane layoutX="39.0" layoutY="81.0" prefHeight="273.0" prefWidth="201.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
+                                 <children>
+                                    <ImageView fitHeight="115.0" fitWidth="198.0" layoutX="2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/foods/appetizer/Apetizer1.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="16.0" layoutY="137.0" text="Ayam goreng Suharti">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="16.0" layoutY="171.0">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="18.0" layoutY="205.0" text="Ayam">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="buttonMenu11" layoutX="35.0" layoutY="233.0" mnemonicParsing="false" onAction="#addFood" prefHeight="28.0" prefWidth="131.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 8;" text="Tambah">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <Label layoutX="127.0" layoutY="205.0" text="Rp 24.000">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="280.0" layoutY="81.0" prefHeight="273.0" prefWidth="201.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
+                                 <children>
+                                    <ImageView fitHeight="115.0" fitWidth="198.0" layoutX="2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/foods/appetizer/Apetizer2.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="16.0" layoutY="137.0" text="Bakso Sapi dan Mie">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="16.0" layoutY="164.0" text="Pak Bagong">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="18.0" layoutY="205.0" text="Sapi">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="buttonMenu21" layoutX="35.0" layoutY="233.0" mnemonicParsing="false" onAction="#addFood" prefHeight="28.0" prefWidth="131.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 8;" text="Tambah">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <Label layoutX="127.0" layoutY="205.0" text="Rp 18.000">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="521.0" layoutY="81.0" prefHeight="273.0" prefWidth="201.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
+                                 <children>
+                                    <ImageView fitHeight="115.0" fitWidth="198.0" layoutX="2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/foods/appetizer/Apetizer3.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="16.0" layoutY="137.0" text="Dimsum lantai 3">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="16.0" layoutY="164.0" text="Isi 3">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="18.0" layoutY="205.0" text="Dimsum">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="buttonMenu31" layoutX="35.0" layoutY="233.0" mnemonicParsing="false" onAction="#addFood" prefHeight="28.0" prefWidth="131.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 8;" text="Tambah">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <Label layoutX="127.0" layoutY="205.0" text="Rp 20.000">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="39.0" layoutY="403.0" prefHeight="273.0" prefWidth="201.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
+                                 <children>
+                                    <ImageView fitHeight="115.0" fitWidth="198.0" layoutX="2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/foods/appetizer/Apetizer4.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="16.0" layoutY="137.0" text="Bebek Manis Kayak">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="16.0" layoutY="164.0" text="Kamu">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="18.0" layoutY="205.0" text="Bebek">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="buttonMenu41" layoutX="35.0" layoutY="233.0" mnemonicParsing="false" onAction="#addFood" prefHeight="28.0" prefWidth="131.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 8;" text="Tambah">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <Label layoutX="127.0" layoutY="205.0" text="Rp 28.000">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="280.0" layoutY="403.0" prefHeight="273.0" prefWidth="201.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
+                                 <children>
+                                    <ImageView fitHeight="115.0" fitWidth="198.0" layoutX="2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/foods/appetizer/Apetizer1.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="16.0" layoutY="137.0" text="Sushi jejepangan">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="16.0" layoutY="171.0" text="Isi 6">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="18.0" layoutY="205.0" text="Sushi">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="buttonMenu51" layoutX="35.0" layoutY="233.0" mnemonicParsing="false" onAction="#addFood" prefHeight="28.0" prefWidth="131.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 8;" text="Tambah">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <Label layoutX="127.0" layoutY="205.0" text="Rp 32.000">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="521.0" layoutY="403.0" prefHeight="273.0" prefWidth="201.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
+                                 <children>
+                                    <ImageView fitHeight="115.0" fitWidth="198.0" layoutX="2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/foods/appetizer/Apetizer2.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="16.0" layoutY="137.0" text="Nasi goreng Bedeng">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="16.0" layoutY="171.0">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="18.0" layoutY="205.0" text="Nasi">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="buttonMenu61" layoutX="35.0" layoutY="233.0" mnemonicParsing="false" onAction="#addFood" prefHeight="28.0" prefWidth="131.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 8;" text="Tambah">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <Label layoutX="127.0" layoutY="205.0" text="Rp 13.000">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <Label fx:id="mainCourseButton1" layoutX="182.0" layoutY="36.0" onMouseClicked="#toMainCourse" text="Main Course" textFill="WHITE">
+                                 <font>
+                                    <Font name="Nirmala UI Bold" size="20.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Label>
+                              <Label fx:id="appetizerButton1" layoutX="336.0" layoutY="36.0" onMouseClicked="#toAppetizer" text="Appetizer" textFill="WHITE" underline="true">
+                                 <font>
+                                    <Font name="Nirmala UI Bold" size="20.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Label>
+                              <Label fx:id="dessertButton1" layoutX="467.0" layoutY="36.0" onMouseClicked="#toDessert" text="Dessert" textFill="WHITE">
+                                 <font>
+                                    <Font name="Nirmala UI Bold" size="20.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </ScrollPane>
+                  <ScrollPane fx:id="mainCourseScroll" layoutX="63.0" layoutY="-4.0" prefHeight="532.0" prefWidth="779.0" style="-fx-background-color: transparent;">
+                     <content>
+                        <AnchorPane prefHeight="776.0" prefWidth="762.0" style="-fx-background-color: #DB1934;">
+                           <children>
+                              <AnchorPane layoutX="39.0" layoutY="81.0" prefHeight="273.0" prefWidth="201.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
+                                 <children>
+                                    <ImageView fitHeight="115.0" fitWidth="198.0" layoutX="2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/foods/Ayam%20goreng.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="16.0" layoutY="137.0" text="Ayam goreng Suharti">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="16.0" layoutY="171.0">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="18.0" layoutY="205.0" text="Ayam">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="buttonMenu1" layoutX="35.0" layoutY="233.0" mnemonicParsing="false" onAction="#addFood" prefHeight="28.0" prefWidth="131.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 8;" text="Tambah">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <Label layoutX="127.0" layoutY="205.0" text="Rp 24.000">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="280.0" layoutY="81.0" prefHeight="273.0" prefWidth="201.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
+                                 <children>
+                                    <ImageView fitHeight="115.0" fitWidth="198.0" layoutX="2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/foods/Bakso%20sapi%20pak%20bagong.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="16.0" layoutY="137.0" text="Bakso Sapi dan Mie">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="16.0" layoutY="164.0" text="Pak Bagong">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="18.0" layoutY="205.0" text="Sapi">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="buttonMenu2" layoutX="35.0" layoutY="233.0" mnemonicParsing="false" onAction="#addFood" prefHeight="28.0" prefWidth="131.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 8;" text="Tambah">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <Label layoutX="127.0" layoutY="205.0" text="Rp 18.000">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="521.0" layoutY="81.0" prefHeight="273.0" prefWidth="201.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
+                                 <children>
+                                    <ImageView fitHeight="115.0" fitWidth="198.0" layoutX="2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/foods/Dimsum%20lantai%203.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="16.0" layoutY="137.0" text="Dimsum lantai 3">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="16.0" layoutY="164.0" text="Isi 3">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="18.0" layoutY="205.0" text="Dimsum">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="buttonMenu3" layoutX="35.0" layoutY="233.0" mnemonicParsing="false" onAction="#addFood" prefHeight="28.0" prefWidth="131.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 8;" text="Tambah">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <Label layoutX="127.0" layoutY="205.0" text="Rp 20.000">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="39.0" layoutY="403.0" prefHeight="273.0" prefWidth="201.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
+                                 <children>
+                                    <ImageView fitHeight="115.0" fitWidth="198.0" layoutX="2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/foods/Bebek%20goreng%20manis.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="16.0" layoutY="137.0" text="Bebek Manis Kayak">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="16.0" layoutY="164.0" text="Kamu">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="18.0" layoutY="205.0" text="Bebek">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="buttonMenu4" layoutX="35.0" layoutY="233.0" mnemonicParsing="false" onAction="#addFood" prefHeight="28.0" prefWidth="131.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 8;" text="Tambah">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <Label layoutX="127.0" layoutY="205.0" text="Rp 28.000">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="280.0" layoutY="403.0" prefHeight="273.0" prefWidth="201.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
+                                 <children>
+                                    <ImageView fitHeight="115.0" fitWidth="198.0" layoutX="2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/foods/sushi.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="16.0" layoutY="137.0" text="Sushi jejepangan">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="16.0" layoutY="171.0" text="Isi 6">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="18.0" layoutY="205.0" text="Sushi">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="buttonMenu5" layoutX="35.0" layoutY="233.0" mnemonicParsing="false" onAction="#addFood" prefHeight="28.0" prefWidth="131.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 8;" text="Tambah">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <Label layoutX="127.0" layoutY="205.0" text="Rp 32.000">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="521.0" layoutY="403.0" prefHeight="273.0" prefWidth="201.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
+                                 <children>
+                                    <ImageView fitHeight="115.0" fitWidth="198.0" layoutX="2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/foods/nasi%20goreng%20bedeng.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="16.0" layoutY="137.0" text="Nasi goreng Bedeng">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="16.0" layoutY="171.0">
+                                       <font>
+                                          <Font name="Nirmala UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="18.0" layoutY="205.0" text="Nasi">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="buttonMenu6" layoutX="35.0" layoutY="233.0" mnemonicParsing="false" onAction="#addFood" prefHeight="28.0" prefWidth="131.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 8;" text="Tambah">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <Label layoutX="127.0" layoutY="205.0" text="Rp 13.000">
+                                       <font>
+                                          <Font name="Nirmala UI" size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <Label layoutX="182.0" layoutY="36.0" onMouseClicked="#toMainCourse" text="Main Course" textFill="WHITE" underline="true">
+                                 <font>
+                                    <Font name="Nirmala UI Bold" size="20.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Label>
+                              <Label layoutX="336.0" layoutY="36.0" onMouseClicked="#toAppetizer" text="Appetizer" textFill="WHITE">
+                                 <font>
+                                    <Font name="Nirmala UI Bold" size="20.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Label>
+                              <Label layoutX="467.0" layoutY="36.0" onMouseClicked="#toDessert" text="Dessert" textFill="WHITE">
+                                 <font>
+                                    <Font name="Nirmala UI Bold" size="20.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </ScrollPane>
+                  <VBox fx:id="navbarLeft" layoutX="62.0" layoutY="-1.0" prefHeight="533.0" prefWidth="151.0" style="-fx-background-color: #A11629;" visible="false">
+                     <children>
+                        <Button mnemonicParsing="false" prefHeight="65.0" prefWidth="147.0" style="visibility: false;" textFill="WHITE">
+                           <font>
+                              <Font name="Comic Sans MS" size="22.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="navbarButton1" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseEntered="#enter" onMouseExited="#left" prefHeight="65.0" prefWidth="149.0" style="-fx-background-color: #A11629;" text="Foods" textFill="WHITE">
+                           <font>
+                              <Font name="Nirmala UI Bold" size="18.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="navbarButton2" layoutX="10.0" layoutY="90.0" mnemonicParsing="false" onMouseClicked="#toBeverage" onMouseEntered="#enter" onMouseExited="#left" prefHeight="65.0" prefWidth="149.0" style="-fx-background-color: #A11629;" text="Beverage" textFill="WHITE">
+                           <font>
+                              <Font name="Nirmala UI Bold" size="18.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="navbarButton3" layoutX="10.0" layoutY="170.0" mnemonicParsing="false" onMouseClicked="#toOrder" onMouseEntered="#enter" onMouseExited="#left" prefHeight="65.0" prefWidth="149.0" style="-fx-background-color: #A11629;" text="Order" textFill="WHITE">
+                           <font>
+                              <Font name="Nirmala UI Bold" size="18.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="navbarButton4" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#toWallet" onMouseEntered="#enter" onMouseExited="#left" prefHeight="65.0" prefWidth="149.0" style="-fx-background-color: #A11629;" text="Wallet" textFill="WHITE">
+                           <font>
+                              <Font name="Nirmala UI Bold" size="18.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="navbarButton5" layoutX="10.0" layoutY="263.0" mnemonicParsing="false" onMouseClicked="#toManageAccount" onMouseEntered="#enter" onMouseExited="#left" prefHeight="65.0" prefWidth="149.0" style="-fx-background-color: #A11629;" text="Account" textFill="WHITE">
+                           <font>
+                              <Font name="Nirmala UI Bold" size="18.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <AnchorPane prefHeight="139.0" prefWidth="151.0">
+                           <children>
+                              <Button fx:id="navbarButton6" layoutX="1.0" layoutY="59.0" mnemonicParsing="false" onMouseClicked="#toLogout" onMouseEntered="#enter" onMouseExited="#left" prefHeight="65.0" prefWidth="149.0" style="-fx-background-color: #A11629;" text="LogOut" textFill="WHITE">
+                                 <font>
+                                    <Font name="Nirmala UI Bold" size="18.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="533.0" prefWidth="62.0" style="-fx-background-color: #30272C;">
+                     <children>
+                        <AnchorPane onMouseClicked="#showNavbarLeft" prefHeight="65.0" prefWidth="62.0">
+                           <children>
+                              <ImageView fx:id="menuIcon" fitHeight="24.0" fitWidth="42.0" layoutX="11.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/Garis3.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="65.0" prefWidth="62.0">
+                           <children>
+                              <ImageView fx:id="navbar1" fitHeight="31.0" fitWidth="25.0" layoutX="19.0" layoutY="18.0" onMouseEntered="#enter" onMouseExited="#left" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/foods.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                              <Rectangle fx:id="hover1" fill="WHITE" height="58.0" layoutX="2.0" layoutY="4.0" stroke="WHITE" strokeMiterLimit="0.0" strokeType="INSIDE" visible="false" width="6.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="75.0" onMouseEntered="#enter" onMouseExited="#left" prefHeight="65.0" prefWidth="62.0">
+                           <children>
+                              <ImageView fx:id="navbar2" fitHeight="31.0" fitWidth="25.0" layoutX="19.0" layoutY="18.0" onMouseClicked="#toBeverage" onMouseEntered="#enter" onMouseExited="#left" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/Beverage.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                              <Rectangle fx:id="hover2" fill="WHITE" height="58.0" layoutX="2.0" layoutY="4.0" stroke="WHITE" strokeMiterLimit="0.0" strokeType="INSIDE" visible="false" width="6.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="75.0" prefHeight="65.0" prefWidth="62.0">
+                           <children>
+                              <ImageView fx:id="navbar3" fitHeight="31.0" fitWidth="25.0" layoutX="19.0" layoutY="21.0" onMouseClicked="#toOrder" onMouseEntered="#enter" onMouseExited="#left" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/Wallet.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                              <Rectangle fx:id="hover3" fill="WHITE" height="58.0" layoutX="2.0" layoutY="4.0" stroke="WHITE" strokeMiterLimit="0.0" strokeType="INSIDE" visible="false" width="6.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="345.0" onMouseClicked="#toWallet" prefHeight="65.0" prefWidth="62.0">
+                           <children>
+                              <ImageView fx:id="navbar4" fitHeight="31.0" fitWidth="25.0" layoutX="19.0" layoutY="21.0" onMouseClicked="#toWallet" onMouseEntered="#enter" onMouseExited="#left" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/Wallets.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                              <Rectangle fx:id="hover4" fill="WHITE" height="58.0" layoutX="2.0" layoutY="4.0" stroke="WHITE" strokeMiterLimit="0.0" strokeType="INSIDE" visible="false" width="6.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="206.0" prefHeight="65.0" prefWidth="62.0">
+                           <children>
+                              <ImageView fx:id="navbar5" fitHeight="31.0" fitWidth="25.0" layoutX="19.0" layoutY="21.0" onMouseClicked="#toManageAccount" onMouseEntered="#enter" onMouseExited="#left" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/Account.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                              <Rectangle fx:id="hover5" fill="WHITE" height="58.0" layoutX="2.0" layoutY="4.0" stroke="WHITE" strokeMiterLimit="0.0" strokeType="INSIDE" visible="false" width="6.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="139.0" prefWidth="62.0">
+                           <children>
+                              <ImageView fx:id="navbar6" fitHeight="34.0" fitWidth="30.0" layoutX="16.0" layoutY="77.0" onMouseClicked="#toLogout" onMouseEntered="#enter" onMouseExited="#left" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/Logout.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                              <Rectangle fx:id="hover6" fill="WHITE" height="58.0" layoutX="2.0" layoutY="63.0" stroke="WHITE" strokeMiterLimit="0.0" strokeType="INSIDE" visible="false" width="6.0" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
