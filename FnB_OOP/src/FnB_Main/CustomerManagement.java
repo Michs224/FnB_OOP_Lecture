@@ -5,7 +5,6 @@ import java.sql.SQLException;
 //Interface untuk manajemen data pelanggan
 
 public interface CustomerManagement {
-	
 	void addCustomer(String name, String address, double initialBalance, String phone) throws SQLException;
     public void deleteCustomer(String phoneToDelete) throws SQLException;
     public Customer getCustomerByPhone(String phone) throws SQLException;
